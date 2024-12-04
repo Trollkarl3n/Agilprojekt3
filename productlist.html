@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Page listing products in the specified category -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/stylesubpage.css" />
+    <link rel="stylesheet" href="css/products.css" />
+    <script src="js/productlist.js" type="module"></script>
+    <title>Sida produktlista</title>
+  </head>
+  <body class="subpage">
+    <!-- Page header with logo and nav menu -->
+    <header>
+      <nav>
+        <div class="logo">
+          <h1><a href="index.html">Cool Fashion</a></h1>
+        </div>
+        <div class="main-menu">
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+          <label for="nav-toggle" id="nav-button" tabindex="0"
+            ><span>Menu</span></label
+          >
+          <ul>
+            <li><a href="categorylist.html?group=clothes">Kläder</a></li>
+            <li><a href="categorylist.html?group=skate">Test</a></li>
+            <li><a href="productcart.html">Varukorg</a></li>
+            <li><a href="wishlist.html">Önskelista</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Main content section -->
+    <main>
+      <section>
+        <h2>Kategori produktlista</h2>
+        <div class="product-list">
+          <div class="no-products">
+            Det finns inga produkter i denna kategori ännu.
+          </div>
+        </div>
+      </section>
+    </main>
+    <template id="product-card-template">
+      <article class="product-list-card">
+        <a href="productinfo.html" class="product-link-image"
+          ><img src="images/image-placeholder.jpg" alt="placeholder image"
+        /></a>
+        <h3>Produkt</h3>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+          dolores, velit itaque beatae incidunt commodi facilis earum similique
+          nobis non veritatis voluptate quis odit, placeat, nemo ratione fugit
+          corrupti nam ipsam iste laborum quaerat.
+        </div>
+        <div class="product-list-card-footer">
+          <a href="productinfo.html" class="product-link">Mer info</a>
+          <a href="productcart.html" class="product-link">Köp</a>
+        </div>
+      </article>
+    </template>
+    <!-- Page footer -->
+    <footer>
+      <div class="footer-links"><a href="admin.html">Admin</a></div>
+      <div class="footer-links"><a href="contact.html">Kontakt</a></div>
+      <div class="footer-links">
+        <a href="productsearch.html">Sök produkt</a>
+      </div>
+    </footer>
+  </body>
+</html>

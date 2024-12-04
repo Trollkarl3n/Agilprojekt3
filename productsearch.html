@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Front page of the site -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/stylesubpage.css">
+        <link rel="stylesheet" href="css/search.css">
+        <script src="js/productsearch.js" type="module"></script>
+        <title>Framsida</title>
+    </head>
+    <body class="subpage">
+        <!-- Page header with logo and nav menu -->
+        <header>
+            <nav>
+                <div class="logo">
+                    <h1><a href="index.html">Cool Fashion</a></h1>
+                </div>
+                <div class="main-menu">
+                    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+                    <label for="nav-toggle" id="nav-button" tabindex="0"><span>Menu</span></label>
+                    <ul>
+                        <li><a href="categorylist.html?group=clothes">Kläder</a></li>
+                        <li><a href="categorylist.html?group=skate">Test</a></li>
+                        <li><a href="productcart.html">Varukorg</a></li>
+                        <li><a href="wishlist.html">Önskelista</a></li>
+
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Main content section -->
+        <main>
+            <section>
+                <!-- Product search form -->
+                <form id="product-search-form" class="product-search-form-page">
+                    <input type="text" id="product-search-text" name="search-text" placeholder="sök produkter">
+                </form>
+                <!-- Search results box -->
+                <div id="product-search-result" class="product-search-result-page"></div>
+            </section>
+        </main>
+        <!-- Page footer -->
+        <footer>
+            <div class="footer-links"><a href="admin.html">Admin</a></div>
+            <div class="footer-links"><a href="contact.html">Kontakt</a></div>
+            <div class="footer-links"><a href="productsearch.html">Sök produkt</a></div>
+        </footer>
+        <!-- Template for a product card in the search results -->
+        <template id="product-search-result-template">
+            <article class="search-product-card">
+                <img class="search-product-image" src="">
+                <div class="search-product-name"></div>
+                <div class="search-product-desc"></div>
+                <a class="search-product-link">Visa</div>
+            </article>
+        </template>
+    </body>
+</html>
