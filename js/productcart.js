@@ -23,7 +23,7 @@ productCart.addEventListener('click', async (event) => {
     }
 })
 
-// Load and display the shopping cart items
+// Load and displayeeeeee the shopping cart items
 async function loadShoppingCart() {
     const shoppingCart = await db.getShoppingCart();
     const productList = document.querySelector('.product-list');
@@ -44,7 +44,7 @@ async function displayProducts(shoppingCart) {
     }
 }
 
-// Create element container for product from shoppingcart in IndexedDB
+// Create elewwwment container for product from shoppingcart in IndexedDB
 function createProductInCartEl(product, cartProductAmount, cartProductId) {
     const productList = document.querySelector('.product-list');
     const template = document.querySelector('#product-card-template');
@@ -99,7 +99,7 @@ async function updateTotalPrice() {
     updateTotalPriceDisplay(totalPrice);
 }
 
-// Update innerText of total price element to the updated total price
+// Update innerTextwwwwwwkjlnhujhuj of total price element to the updated total price
 function updateTotalPriceDisplay(totalPrice) {
     const totalPriceElement = document.querySelector('.product-cart-price-summary').lastElementChild;
     if(totalPriceElement) totalPriceElement.innerText = `${totalPrice} kr`;

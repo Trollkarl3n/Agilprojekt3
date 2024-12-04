@@ -8,6 +8,7 @@ import * as database from "./database.js";
 const groupList = [
   { name: "clothes", label: "Kläder" },
   { name: "skate", label: "Skate" },
+  { name: "misc", label: "Blandat" },
 ];
 
 ////////// DEFAULT LIST OF PRODUCT CATEGORIES
@@ -30,30 +31,6 @@ const categoryList = [
     image: "images/categories/tshirts.png",
     group: "clothes",
   },
-  {
-    categoryid: 4,
-    name: "Brädor",
-    image: "images/categories/skateboard1.png",
-    group: "skate",
-  },
-  {
-    categoryid: 5,
-    name: "Solglasögon",
-    image: "images/categories/sunglasses.png",
-    group: "misc",
-  },
-  {
-    categoryid: 6,
-    name: "Prylar",
-    image: "images/categories/prylar.png",
-    group: "misc",
-  },
-  {
-    categoryid: 7,
-    name: "Skydd",
-    image: "images/categories/skydd.png",
-    group: "skate",
-  },
 ];
 
 ////////// DEFAULT PRODUCT LIST
@@ -61,140 +38,56 @@ const productList = [
   {
     productid: 1,
     category: "1",
-    name: "",
-    date: "2024-09-02 08:00:01",
+    name: "Jeans jacka",
+    date: "2024-12-04 ",
     price: "400",
     description:
-      "",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
     amount: 20,
     image: [
-      "",
-      "",
-      "",
+      "images/products/jacketjeans1.png",
+      "images/products/jacketjeans2.png",
+      "images/products/jacketjeans3.png",
     ],
   },
   {
     productid: 2,
     category: "1",
-    name: "",
-    date: "2024-08-01 08:00:00",
+    name: "Annan jacka",
+    date: "2024-12-04",
     price: "600",
     description:
-      "",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
     amount: 25,
     image: [
-      "",
-      "",
+      "images/products/jacketmisc1.png",
+      "images/products/jacketmisc2.png",
     ],
   },
   {
     productid: 3,
     category: "1",
-    name: "",
-    date: "2024-07-22 08:00:00",
+    name: "Läderjacka",
+    date: "2024-12-04",
     price: "550",
     description:
-      "",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
     amount: 10,
-    image: [""],
+    image: ["images/products/jacketleather.png"],
   },
   {
-    productid: 4,
-    category: "4",
-    name: "",
-    date: "2024-09-02 10:00:01",
-    price: "1000",
-    description:
-      "",
-    amount: 50,
-    image: [
-      "",
-      "",
-    ],
-  },
-  {
-    productid: 5,
-    category: "4",
-    name: "",
-    date: "2024-08-12 09:00:00",
-    price: "1200",
-    amount: 40,
-    description: "",
-    image: [
-      "",
-      "",
-    ],
-  },
-  {
-    productid: 6,
-    category: "4",
-    name: "",
-    date: "2024-08-15 09:00:00",
-    price: "1499",
-    amount: 30,
-    description: "",
-    image: [""],
-  },
-  {
-    productid: 7,
+    productid: 3,
     category: "1",
-    name: "",
-    date: "2024-08-15 09:15:00",
-    price: "2499",
-    amount: 10,
-    description: "",
-    image: [""],
-  },
-  {
-    productid: 8,
-    category: "2",
-    name: "",
-    date: "2024-08-15 09:50:00",
-    price: "499",
-    amount: 50,
-    description: "",
-    image: [""],
-  },
-  {
-    productid: 9,
-    category: "3",
-    name: "",
-    date: "2024-08-15 10:50:00",
-    price: "299",
-    amount: 50,
-    description: "",
-    image: [""],
-  },
-  {
-    productid: 10,
-    category: "5",
-    name: "",
-    date: "2024-09-15 11:50:00",
-    price: "199",
-    amount: 50,
-    description: "",
-    image: [""],
-  },
-  {
-    productid: 11,
-    category: "6",
-    name: "",
-    date: "2024-09-15 10:50:00",
-    price: "149",
-    amount: 50,
-    description: "",
-    image: [""],
-  },
-  {
-    productid: 12,
-    category: "7",
-    name: "",
-    date: "2024-08-15 10:50:00",
-    price: "399",
-    amount: 50,
+    name: "Annan jacwwwka",
+    date: "2024-12-04",
+    price: "600",
     description:
-      "",
-    image: [""],
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
+    amount: 25,
+    image: [
+      "images/products/jacketmisc1.png",
+      "images/products/jacketmisc2.png",
+    ],
   },
 ];
 
@@ -230,7 +123,7 @@ export async function getCategories(filterGroup = null) {
   // Set default/placeholder image if a category lacks a button image
   categories.forEach((category, idx, arr) => {
     if (!category.image.length) {
-      arr[idx].image = "";
+      arr[idx].image = "./images/image-placeholder.jpg";
     }
   });
 
