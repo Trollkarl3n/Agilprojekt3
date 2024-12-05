@@ -21,28 +21,22 @@
             <h1><a href="index.html">Cool Fashion</a></h1>
           </div>
           <div class="searchbox">
-            <form
-              id="product-search-form"
-              class="product-search-form"
-              action="submit">
-              <input
-                type="text"
-                id="product-search-text"
-                placeholder="sök produkter" />
+            <form id="product-search-form" class="product-search-form" action="submit">
+              <input type="text" id="product-search-text" placeholder="sök produkter" />
             </form>
           </div>
-          <div class="main-menu-wrapper">
-            <div class="main-menu">
-              <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-              <label for="nav-toggle" id="nav-button" tabindex="0"><span>Menu</span></label>
-              <ul>
-                <li><a href="category.html?group=clothes">Kläder</a></li>
-                <li><a href="category.html?group=skate">Test</a></li>
-                <li><a href="productcart.html">Varukorg</a></li>
-                <li><a href="wishlist.html">Önskelista</a></li>
-              </ul>
-            </div>
-          </div>
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+          <label for="nav-toggle" class="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </label>
+          <ul class="main-menu">
+            <li><a href="category.html?group=clothes">Kläder</a></li>
+            <li><a href="category.html?group=skate">Test</a></li>
+            <li><a href="productcart.html">Varukorg</a></li>
+            <li><a href="wishlist.html">Önskelista</a></li>
+          </ul>
         </nav>
         <span class="hero-text">Cool Fashion</span>
       </section>
@@ -73,7 +67,6 @@
         <h2 class="latest-products-header">Senaste produkter</h2>
         <div id="latest-products" class="latest-products-container"></div>
       </section>
-
       <section>
         <div class="category-card">
           <div class="container">

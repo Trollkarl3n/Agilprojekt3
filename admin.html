@@ -12,23 +12,22 @@
   <body class="subpage">
     <!-- Page header with logo and nav menu -->
     <header>
-      <nav>
+      <nav class="navbar">
         <div class="logo">
           <h1><a href="index.html">Cool Fashion</a></h1>
         </div>
-        <div class="main-menu">
-          <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-          <label for="nav-toggle" id="nav-button" tabindex="0"
-            ><span>Menu</span></label
-          >
-          <ul>
-            <li><a href="categorylist.html?group=clothes">Kläder</a></li>
-            <li><a href="categorylist.html?group=skate">Skate</a></li>
-            <li><a href="categorylist.html?group=misc">Blandat</a></li>
-            <li><a href="productcart.html">Varukorg</a></li>
-            <li><a href="wishlist.html">Önskelista</a></li>
-          </ul>
-        </div>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+        <label for="nav-toggle" class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <ul class="nav-links">
+          <li><a href="category.html?group=clothes">Kläder</a></li>
+          <li><a href="category.html?group=skate">Test</a></li>
+          <li><a href="productcart.html">Varukorg</a></li>
+          <li><a href="wishlist.html">Önskelista</a></li>
+        </ul>
       </nav>
     </header>
     <!-- Main content section -->

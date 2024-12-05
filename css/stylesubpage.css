@@ -175,4 +175,96 @@ footer .footer-links a:hover {
     form {
     padding: 0;
   }
-}  
+}
+
+/* Grundläggande styling för navbaren */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000; /* Svart bakgrund */
+  color: #fff; /* Vit text */
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ff6f61; /* Orange färg på hover */
+}
+
+/* Göm nav-länkar och visa hamburgerknappen på små skärmar */
+.nav-toggle {
+  display: none;
+}
+
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Responsiv design: små skärmar */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #000;
+    border: 1px solid #fff;
+    padding: 10px;
+    gap: 15px;
+    width: 200px;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .hamburger-menu {
+    display: flex;
+  }
+
+  #nav-toggle:checked ~ .nav-links {
+    display: flex;
+  }
+
+  /* Hamburger animation */
+  #nav-toggle:checked + .hamburger-menu span:nth-child(1) {
+    transform: rotate(45deg);
+    position: relative;
+    top: 7px;
+  }
+
+  #nav-toggle:checked + .hamburger-menu span:nth-child(2) {
+    opacity: 0;
+  }
+
+  #nav-toggle:checked + .hamburger-menu span:nth-child(3) {
+    transform: rotate(-45deg);
+    position: relative;
+    top: -7px;
+  }
+}
