@@ -1,0 +1,16 @@
+/* Specific Admin Page Styles */
+#category-preview, #product-preview {
+    margin-bottom: 15px;
+    text-align: center;
+}
+  
+#main-image-preview {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+}
+  
+#main-image-select {
+    width: auto;
+    display: inline-block;
+}

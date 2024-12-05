@@ -1,0 +1,178 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+  
+h1, h2 {
+  color: #222;
+}
+  
+a {
+  text-decoration: none;
+  color: #0073e6;
+}
+  
+a:hover {
+  text-decoration: underline;
+}
+  
+button {
+  background-color: #0073e6;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+  
+button:hover {
+  background-color: #005bb5;
+}
+  
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+  
+/* Header */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+}
+  
+header .logo h1 {
+  margin: 0;
+  padding: 0 20px;
+  font-size: 1.5rem;
+}
+  
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+  
+header nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+  
+header nav ul li {
+  margin: 0 15px;
+}
+  
+header nav ul li a {
+  color: #fff;
+}
+  
+header #nav-toggle {
+  display: none;
+}
+  
+header #nav-button {
+  display: none;
+}
+  
+/* Main Content */
+main {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+  
+main section {
+  margin-bottom: 30px;
+}
+  
+main h2 {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+  
+form {
+  display: flex;
+  flex-direction: column;
+}
+  
+form div {
+  margin-bottom: 15px;
+}
+  
+form img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+  
+form .thumbnails {
+  display: flex;
+  gap: 10px;
+}
+  
+form .thumbnails img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+  
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+  
+footer .footer-links {
+   margin: 10px 0;
+}
+  
+footer .footer-links a {
+  color: #fff;
+  font-size: 0.9rem;
+}
+  
+footer .footer-links a:hover {
+  text-decoration: underline;
+}
+  
+/* Responsive Design */
+@media (max-width: 768px) {
+    header nav ul {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    header nav ul li {
+      margin: 10px 0;
+    }
+  
+    main {
+      padding: 15px;
+    }
+  
+    form {
+    padding: 0;
+  }
+}  
