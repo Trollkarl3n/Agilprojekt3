@@ -110,7 +110,6 @@ export async function addCategory(categoryName, categoryImage, categoryGroup) {
 }
 
 // Add product to the admin-added products table in IndexedDB
-// // name, date, description, price, category, image
 export async function addProduct(
   productName,
   productDescription,
@@ -144,6 +143,67 @@ export async function addProduct(
       });
 
       dbTrans.objectStore("products").add(newProduct);
+    }
+  });
+}
+
+// Update product in the admin-added products table in IndexedDB
+export async function updateProduct(productId, updatedData) {
+  await initializeDB();
+  return new Promise((resolve, reject) => {
+    if (db) {
+      const transaction = db.transaction("products", "readwrite");
+      const store = transaction.objectStore("products");
+      const getRequest = store.get(productId);
+
+      getRequest.onsuccess = () => {
+        const product = getRequest.result;
+        if (product) {
+          // Merge existing product data with the updated data
+          const updatedProduct = { ...product, ...updatedData };
+          const updateRequest = store.put(updatedProduct);
+
+          updateRequest.onsuccess = () => {
+            console.log(`Product ${productId} updated successfully.`);
+            resolve(updatedProduct);
+          };
+
+          updateRequest.onerror = (event) => {
+            console.error("Failed to update product:", event.target.error);
+            reject(event.target.error);
+          };
+        } else {
+          console.error(`Product with ID ${productId} not found.`);
+          reject("Product not found");
+        }
+      };
+
+      getRequest.onerror = (event) => {
+        console.error("Failed to fetch product for update:", event.target.error);
+        reject(event.target.error);
+      };
+    }
+  });
+}
+
+// Remove product from the admin-added products table in IndexedDB
+export async function removeProduct(productId) {
+  await initializeDB();
+  return new Promise((resolve, reject) => {
+    if (db) {
+      const transaction = db.transaction("products", "readwrite");
+      const store = transaction.objectStore("products");
+      const deleteRequest = store.delete(productId);
+
+      deleteRequest.onsuccess = () => {
+        console.log(`Product ${productId} deleted successfully.`);
+        resolve();
+      };
+
+      deleteRequest.onerror = (event) => {
+        console.error("Failed to delete product:", event.target.error);
+        reject(event.target.error);
+      };
     }
   });
 }
