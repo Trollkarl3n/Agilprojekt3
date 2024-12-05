@@ -62,6 +62,7 @@ if (newProductForm) {
             alert("Ny produkt skapad!");
             event.target.reset();
             document.querySelector("#product-preview").innerHTML = "";
+            loadProducts(); // Refresh product dropdown after adding a new product
         }).catch((error) => {
             console.error("Error creating new product!", error);
         });
@@ -116,20 +117,85 @@ mainImageSelect.addEventListener("change", () => {
 
 // Build menu options for Category menu in the new Product form.
 if (newProductCatList && newProductForm) {
-    buildCategoryMenuOptions(newProductCatList);
+    loadCategories(); // Load categories on form initialization
 }
 
-async function buildCategoryMenuOptions(targetSelectMenu) {
-    const categories = await productdata.getCategories();
+// Load the categories from the database
+async function loadCategories() {
+    try {
+        const categories = await productdata.getCategories(); // Fetch categories from the database
+        console.log("Fetched Categories:", categories); // Log fetched categories
 
-    targetSelectMenu.innerHTML = "";
+        // Populate the create product category dropdown
+        newProductCatList.innerHTML = "";
+        categories.forEach(category => {
+            const option = document.createElement("option");
+            option.value = category.categoryid;
+            option.innerText = category.name;
+            newProductCatList.appendChild(option);
+        });
 
-    for (const category of categories) {
-        const menuOption = document.createElement("option");
-        menuOption.value = category.categoryid;
-        menuOption.innerText = category.name;
-        targetSelectMenu.appendChild(menuOption);
+        // Populate the edit product category dropdown
+        const editProductCategorySelect = document.querySelector("#edit-product-category");
+        editProductCategorySelect.innerHTML = ""; // Clear existing options
+        categories.forEach(category => {
+            const option = document.createElement("option");
+            option.value = category.categoryid;
+            option.innerText = category.name;
+            editProductCategorySelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error loading categories:", error);
     }
+}
+
+// Load products for editing
+async function loadProducts() {
+    const editProductSelect = document.querySelector("#edit-product-select");
+    try {
+        const products = await database.getProducts(); // Fetch products from the database
+        console.log("Fetched Products:", products); // Log fetched products
+
+        // Clear existing options
+        editProductSelect.innerHTML = "";
+        products.forEach(product => {
+            const option = document.createElement("option");
+            option.value = product.productid; // Use the correct product ID
+            option.innerText = product.name; // Display the product name
+            editProductSelect.appendChild(option);
+        });
+
+        // Load product details into the form when a product is selected
+        editProductSelect.addEventListener("change", async (event) => {
+            const selectedProductId = event.target.value;
+            const selectedProduct = products.find(product => product.productid == selectedProductId);
+            if (selectedProduct) {
+                fillEditProductForm(selectedProduct);
+            } else {
+                console.error("Product not found:", selectedProductId);
+            }
+        });
+    } catch (error) {
+        console.error("Error loading products:", error);
+    }
+}
+
+// Fill the edit product form with selected product details
+function fillEditProductForm(product) {
+    console.log("Filling form with product:"). value = product.hej;
+    document.querySelector("#edit-product-name").value = product.name;
+    document.querySelector("#edit-product-desc").value = product.description; 
+    document.querySelector("#edit-product-price").value = product.price;
+    document.querySelector("#edit-product-category").value = product.category;
+
+    // Clear the image previews and set the main image
+    document.getElementById("main-image-preview").src = product.image[0] || ""; 
+    product.image.forEach((img, index) => {
+        const thumbnail = document.querySelector(`#thumbnail-${index + 1}`);
+        if (thumbnail) {
+            thumbnail.src = img; // Set thumbnail images
+        }
+    });
 }
 
 // Handle submitted New Product form data, store it in the db.
@@ -177,3 +243,5 @@ function readProductImage(formImage) {
         }
     });
 }
+
+loadProducts();
