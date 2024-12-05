@@ -1,0 +1,65 @@
+/* Container for the main image and thumbnails */
+.product-image {
+    display: flex;
+    flex-direction: column; /* Stack the images vertically */
+    align-items: center;
+    position: relative;
+    max-width: 100%;
+  }
+  
+  /* Main (focused) image */
+  .product-image img.focused {
+    width: 100%;
+    max-width: 500px; /* Set a max-width to avoid large images */
+    height: auto;
+  }
+  
+  /* Thumbnails container below the main image */
+  .product-image .thumbnails {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Space between the main image and thumbnails */
+    flex-wrap: wrap;
+  }
+  
+  /* Thumbnails */
+  .product-image .thumbnails img {
+    width: 80px;
+    height: auto;
+    opacity: 0.6;
+    cursor: pointer;
+    margin: 0 5px;
+    transition: opacity 0.3s, transform 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for thumbnails */
+  .product-image .thumbnails img:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  /* Selected thumbnail */
+  .product-image .thumbnails img.selected {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  
+  /* Navigation buttons under the thumbnails */
+  .prev, .next {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .prev:hover, .next:hover {
+    opacity: 0.8;
+  }
+  
+  
