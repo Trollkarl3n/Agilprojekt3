@@ -245,3 +245,21 @@ footer .footer-links a:hover {
     grid-template-columns: 1fr;
   }
 }
+.latest-products-container img {
+  width: 300px; /* Sätter bildens bredd till 150px */
+  height: auto; /* Bibehåller proportionerna */
+  border-radius: 5px; /* Valfri: ger bilderna rundade hörn */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Valfri: ger bilderna en liten skugga */
+}
+
+.latest-products-container {
+  display: flex;
+  flex-wrap: wrap; /* Gör att bilderna radbryts vid mindre skärmar */
+  gap: 20px; /* Lägger till utrymme mellan bilderna */
+  justify-content: center; /* Centrerar bilderna i containern */
+}
+
+.latest-products-container div {
+  text-align: center; /* Centrerar texten under varje bild */
+  max-width: 300px; /* Matchar bredden på bilderna */
+}
