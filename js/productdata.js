@@ -8,7 +8,6 @@ import * as database from "./database.js";
 const groupList = [
   { name: "clothes", label: "Kläder" },
   { name: "skate", label: "Skate" },
-  { name: "misc", label: "Blandat" },
 ];
 
 ////////// DEFAULT LIST OF PRODUCT CATEGORIES

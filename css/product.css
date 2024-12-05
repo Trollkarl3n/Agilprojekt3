@@ -1,65 +1,181 @@
-/* Container for the main image and thumbnails */
-.product-image {
-    display: flex;
-    flex-direction: column; /* Stack the images vertically */
-    align-items: center;
-    position: relative;
-    max-width: 100%;
+/* General Page Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: #0073e6;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Product Page Styles */
+.productinfo-page {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.carousel img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button.prev,
+button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 2rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+
+button.prev {
+  left: 10px;
+}
+
+button.next {
+  right: 10px;
+}
+
+button.prev:hover,
+button.next:hover {
+  background: #0073e6;
+}
+
+.product-desc p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.product-actions {
+  display: grid;
+  gap: 15px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0073e6;
+}
+
+.product-stock h3,
+.product-rating h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-stock span {
+  font-weight: bold;
+}
+
+.product-rating span {
+  color: #ffc107;
+}
+
+.product-rating .fa {
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+
+.product-rating .fa.rated {
+  color: #ffc107;
+}
+
+.product-buy,
+.product-wishlist {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #0073e6;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.product-buy:hover,
+.product-wishlist:hover {
+  background-color: #005bb5;
+}
+
+.product-wishlist {
+  background-color: #555;
+}
+
+.product-wishlist:hover {
+  background-color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .product-info {
+    grid-template-columns: 1fr;
   }
-  
-  /* Main (focused) image */
-  .product-image img.focused {
-    width: 100%;
-    max-width: 500px; /* Set a max-width to avoid large images */
-    height: auto;
+
+  button.prev,
+  button.next {
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
   }
-  
-  /* Thumbnails container below the main image */
-  .product-image .thumbnails {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px; /* Space between the main image and thumbnails */
-    flex-wrap: wrap;
+
+  .product-actions {
+    padding: 15px;
   }
-  
-  /* Thumbnails */
-  .product-image .thumbnails img {
-    width: 80px;
-    height: auto;
-    opacity: 0.6;
-    cursor: pointer;
-    margin: 0 5px;
-    transition: opacity 0.3s, transform 0.3s ease-in-out;
+
+  .product-buy,
+  .product-wishlist {
+    font-size: 0.9rem;
+    padding: 8px;
   }
-  
-  /* Hover effect for thumbnails */
-  .product-image .thumbnails img:hover {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  
-  /* Selected thumbnail */
-  .product-image .thumbnails img.selected {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  
-  /* Navigation buttons under the thumbnails */
-  .prev, .next {
-    width: 30px;
-    height: 30px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    font-size: 20px;
-    text-align: center;
-    line-height: 30px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .prev:hover, .next:hover {
-    opacity: 0.8;
-  }
-  
-  
+}
