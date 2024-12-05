@@ -1,194 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Admin control panel page for adding new categories and products -->
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/stylesubpage.css" />
     <link rel="stylesheet" href="css/admin.css" />
-    <script src="js/admin.js" type="module"></script>
-    <title>Admin kontrollpanel</title>
-  </head>
-  <body class="subpage">
-    <!-- Page header with logo and nav menu -->
+    <script src="js/admin.js" type="module" defer></script> <!-- Added defer for better loading -->
+    <title>Admin Kontrollpanel</title>
+</head>
+<body class="subpage">
     <header>
-      <nav class="navbar">
-        <div class="logo">
-          <h1><a href="index.html">Cool Fashion</a></h1>
-        </div>
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-        <label for="nav-toggle" class="hamburger-menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
-        <ul class="nav-links">
-          <li><a href="category.html?group=clothes">Kläder</a></li>
-          <li><a href="category.html?group=skate">Test</a></li>
-          <li><a href="productcart.html">Varukorg</a></li>
-          <li><a href="wishlist.html">Önskelista</a></li>
-        </ul>
-      </nav>
+        <nav>
+            <div class="logo">
+                <h1><a href="index.html">Cool Fashion</a></h1>
+            </div>
+            <div class="main-menu">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+                <label for="nav-toggle" id="nav-button" tabindex="0">Menu</label>
+                <ul>
+                    <li><a href="category.html?group=clothes">Kläder</a></li>
+                    <li><a href="category.html?group=skate">Skate</a></li>
+                    <li><a href="category.html?group=misc">Blandat</a></li>
+                    <li><a href="productcart.html">Varukorg</a></li>
+                    <li><a href="wishlist.html">Önskelista</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
-    <!-- Main content section -->
     <main>
-      <!-- FORM: CREATE NEW CATEGORY -->
-      <section>
-        <h2>Skapa kategori</h2>
-        <form id="create-category-form" method="POST">
-          <div id="category-preview"></div>
-          <div>
-            <label for="create-category-group">Typ</label>
-            <select id="create-category-group" name="category-group" required>
-              <option value="clothes">Kläder</option>
-              <option value="skate">Test</option>
-            </select>
-          </div>
-          <div>
-            <label for="create-category-name">Kategorinamn</label>
-            <input
-              type="text"
-              id="create-category-name"
-              name="category-name"
-              minlength="4"
-              maxlength="20"
-              required
-            />
-          </div>
-          <div>
-            <label for="create-category-image">Kategoribild</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="create-category-image"
-              name="category-image"
-              required
-            />
-          </div>
-          <button>Skapa</button>
-        </form>
-      </section>
-      <hr />
-      <!-- FORM: CREATE NEW PRODUCT -->
-      <section>
-        <h2>Skapa produkt</h2>
-        <form id="create-product-form" method="POST">
-          <div id="product-preview">
-            <img id="main-image-preview" src="" alt="Main Image Preview" />
-            <div>
-              <label for="main-image-select">Välj huvudbild:</label>
-              <select id="main-image-select">
-                <option value="1">Bild 1</option>
-                <option value="2">Bild 2</option>
-                <option value="3">Bild 3</option>
-                <option value="4">Bild 4</option>
-                <option value="5">Bild 5</option>
-              </select>
-            </div>
-            <div class="thumbnails">
-              <img class="thumbnail" src="" alt="Thumbnail 1" />
-              <img class="thumbnail" src="" alt="Thumbnail 2" />
-              <img class="thumbnail" src="" alt="Thumbnail 3" />
-              <img class="thumbnail" src="" alt="Thumbnail 4" />
-              <img class="thumbnail" src="" alt="Thumbnail 5" />
-            </div>
-          </div>
-          <div>
-            <label for="create-product-name">Produktnamn</label>
-            <input
-              id="create-product-name"
-              name="product-name"
-              type="text"
-              minlength="4"
-              maxlength="50"
-              required
-            />
-          </div>
-          <div>
-            <label for="create-product-price">Pris</label>
-            <input
-              id="create-product-price"
-              name="product-price"
-              type="number"
-              min="0"
-              value="0"
-              required
-            />
-          </div>
-          <div>
-            <label for="create-product-desc">Produktbeskrivning</label>
-            <textarea
-              id="create-product-desc"
-              name="product-desc"
-              rows="5"
-              cols="60"
-            ></textarea>
-          </div>
-          <div>
-            <label for="create-product-image-1">Produktbild 1</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="create-product-image-1"
-              name="product-image"
-              required
-            />
-          </div>
-          <div>
-            <label for="create-product-image-2">Produktbild 2</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="create-product-image-2"
-              name="product-image"
-            />
-          </div>
-          <div>
-            <label for="create-product-image-3">Produktbild 3</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="create-product-image-3"
-              name="product-image"
-            />
-          </div>
-          <div>
-            <label for="create-product-image-4">Produktbild 4</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="create-product-image-4"
-              name="product-image"
-            />
-          </div>
-          <div>
-            <label for="create-product-image-5">Produktbild 5</label>
-            <input
-              type="file"
-              accept="image/*"
-              id="create-product-image-5"
-              name="product-image"
-            />
-          </div>
-          <div>
-            <label for="create-product-category">Kategori</label>
-            <select
-              id="create-product-category"
-              name="product-category"
-              required
-            ></select>
-          </div>
-          <button>Skapa</button>
-        </form>
+        <!-- FORM: CREATE NEW CATEGORY -->
+        <section>
+            <h2>Skapa kategori</h2>
+            <form id="create-category-form" method="POST">
+                <div id="category-preview"></div>
+                <div>
+                    <label for="create-category-group">Typ</label>
+                    <select id="create-category-group" name="category-group" required>
+                        <option value="clothes">Kläder</option>
+                        <option value="skate">Test</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="create-category-name">Kategorinamn</label>
+                    <input type="text" id="create-category-name" name="category-name" minlength="4" maxlength="20" required />
+                </div>
+                <div>
+                    <label for="create-category-image">Kategoribild</label>
+                    <input type="file" accept="image/*" id="create-category-image" name="category-image" required />
+                </div>
+                <button type="submit">Skapa</button> <!-- Added type="submit" -->
+            </form>
+        </section>
+        <hr />
+        <!-- FORM: CREATE NEW PRODUCT -->
+        <section>
+            <h2>Skapa produkt</h2>
+            <form id="create-product-form" method="POST">
+                <div id="product-preview">
+                    <img id="main-image-preview" src="" alt="Main Image Preview" />
+                    <div>
+                        <label for="main-image-select">Välj huvudbild:</label>
+                        <select id="main-image-select">
+                            <option value="0">Välj bild</option> <!-- Changed to start from 0 -->
+                            <option value="1">Bild 1</option>
+                            <option value="2">Bild 2</option>
+                            <option value="3">Bild 3</option>
+                            <option value="4">Bild 4</option>
+                            <option value="5">Bild 5</option>
+                        </select>
+                    </div>
+                    <div class="thumbnails">
+                        <img class="thumbnail" id="thumbnail-1" src="" alt="Thumbnail 1" />
+                        <img class="thumbnail" id="thumbnail-2" src="" alt="Thumbnail 2" />
+                        <img class="thumbnail" id="thumbnail-3" src="" alt="Thumbnail 3" />
+                        <img class="thumbnail" id="thumbnail-4" src="" alt="Thumbnail 4" />
+                        <img class="thumbnail" id="thumbnail-5" src="" alt="Thumbnail 5" />
+                    </div>
+                </div>
+                <div>
+                    <label for="create-product-name">Produktnamn</label>
+                    <input id="create-product-name" name="product-name" type="text" minlength="4" maxlength="50" required />
+                </div>
+                <div>
+                    <label for="create-product-price">Pris</label>
+                    <input id="create-product-price" name="product-price" type="number" min="0" value="0" required />
+                </div>
+                <div>
+                    <label for="create-product-desc">Produktbeskrivning</label>
+                    <textarea id="create-product-desc" name="product-desc" rows="5" cols="60"></textarea>
+                </div>
+                <div>
+                    <label for="create-product-image-1">Produktbild 1</label>
+                    <input type="file" accept="image/*" id="create-product-image-1" name="product-image" required />
+                </div>
+                <div>
+                    <label for="create-product-image-2">Produktbild 2</label>
+                    <input type="file" accept="image/*" id="create-product-image-2" name="product-image" />
+                </div>
+                <div>
+                    <label for="create-product-image-3">Produktbild 3</label>
+                    <input type="file" accept="image/*" id="create-product-image-3" name="product-image" />
+                </div>
+                <div>
+                    <label for="create-product-image-4">Produktbild 4</label>
+                    <input type="file" accept="image/*" id="create-product-image-4" name="product-image" />
+                </div>
+                <div>
+                    <label for="create-product-image-5">Produktbild 5</label>
+                    <input type="file" accept="image/*" id="create-product-image-5" name="product-image" />
+                </div>
+                <div>
+                    <label for="create-product-category">Kategori</label>
+                    <select id="create-product-category" name="product-category" required></select>
+                </div>
+                <button type="submit">Skapa</button> <!-- Added type="submit" -->
+            </form>
+        </section>
+        <hr />
+        <!-- FORM: EDIT PRODUCT -->
+        <section>
+          <h2>Redigera produkt</h2>
+          <form id="edit-product-form" method="POST">
+              <div>
+                  <label for="edit-product-select">Välj produkt att redigera</label>
+                  <select id="edit-product-select" name="productlist" required>
+                  </select>
+              </div>
+              <div>
+                  <label for="edit-product-name">Produktnamn</label>
+                  <input type="text" id="edit-product-name" name="product-name" minlength="4" maxlength="30" required />
+              </div>
+              <div>
+                  <label for="edit-product-desc">Beskrivning</label>
+                  <textarea id="edit-product-desc" name="product-desc" minlength="10" required></textarea>
+              </div>
+              <div>
+                  <label for="edit-product-price">Pris</label>
+                  <input type="number" id="edit-product-price" name="product-price" min="0.01" step="0.01" required />
+              </div>
+              <div>
+                  <label for="edit-product-category">Kategori</label>
+                  <select id="edit-product-category" name="product-category" required></select>
+              </div>
+              <button type="submit">Redigera</button> <!-- Added type="submit" -->
+          </form>
       </section>
     </main>
-    <!-- Page footer -->
     <footer>
-      <div class="footer-links"><a href="admin.html">Admin</a></div>
-      <div class="footer-links"><a href="contact.html">Kontakt</a></div>
-      <div class="footer-links">
-        <a href="productsearch.html">Sök produkt</a>
-      </div>
+        <div class="footer-links"><a href="admin.html">Admin</a></div>
+        <div class="footer-links"><a href="contact.html">Kontakt</a></div>
+        <div class="footer-links"><a href="productsearch.html">Sök produkt</a></div>
     </footer>
-  </body>
+</body>
 </html>
