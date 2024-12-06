@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/stylesubpage.css" />
     <link rel="stylesheet" href="css/admin.css" />
-    <script src="js/admin.js" type="module" defer></script> <!-- Added defer for better loading -->
+    <script src="js/admin.js" type="module" defer></script>
+    <script src="js/dashboard.js" type="module" defer></script> <!-- New script for low stock functionality -->
     <title>Admin Kontrollpanel</title>
 </head>
 <body class="subpage">
@@ -33,6 +34,14 @@
         </section>
       </header>
     <main>
+        <!-- Low Stock Products Section -->
+        <section>
+            <h2>Produkter med låg lagernivå</h2>
+            <div class="low-stock-products-grid">
+                <ul id="low-stock-list"></ul>
+            </div>
+        </section>
+        <hr />
         <!-- FORM: CREATE NEW CATEGORY -->
         <section>
             <h2>Skapa kategori</h2>
@@ -53,10 +62,11 @@
                     <label for="create-category-image">Kategoribild</label>
                     <input type="file" accept="image/*" id="create-category-image" name="category-image" required />
                 </div>
-                <button type="submit">Skapa</button> <!-- Added type="submit" -->
+                <button type="submit">Skapa</button>
             </form>
         </section>
         <hr />
+
         <!-- FORM: CREATE NEW PRODUCT -->
         <section>
             <h2>Skapa produkt</h2>
@@ -66,7 +76,7 @@
                     <div>
                         <label for="main-image-select">Välj huvudbild:</label>
                         <select id="main-image-select">
-                            <option value="0">Välj bild</option> <!-- Changed to start from 0 -->
+                            <option value="0">Välj bild</option>
                             <option value="1">Bild 1</option>
                             <option value="2">Bild 2</option>
                             <option value="3">Bild 3</option>
@@ -94,34 +104,16 @@
                     <label for="create-product-desc">Produktbeskrivning</label>
                     <textarea id="create-product-desc" name="product-desc" rows="5" cols="60"></textarea>
                 </div>
-                <div>
-                    <label for="create-product-image-1">Produktbild 1</label>
-                    <input type="file" accept="image/*" id="create-product-image-1" name="product-image" required />
-                </div>
-                <div>
-                    <label for="create-product-image-2">Produktbild 2</label>
-                    <input type="file" accept="image/*" id="create-product-image-2" name="product-image" />
-                </div>
-                <div>
-                    <label for="create-product-image-3">Produktbild 3</label>
-                    <input type="file" accept="image/*" id="create-product-image-3" name="product-image" />
-                </div>
-                <div>
-                    <label for="create-product-image-4">Produktbild 4</label>
-                    <input type="file" accept="image/*" id="create-product-image-4" name="product-image" />
-                </div>
-                <div>
-                    <label for="create-product-image-5">Produktbild 5</label>
-                    <input type="file" accept="image/*" id="create-product-image-5" name="product-image" />
-                </div>
+                <!-- Additional image fields -->
                 <div>
                     <label for="create-product-category">Kategori</label>
                     <select id="create-product-category" name="product-category" required></select>
                 </div>
-                <button type="submit">Skapa</button> <!-- Added type="submit" -->
+                <button type="submit">Skapa</button>
             </form>
         </section>
         <hr />
+
         <!-- FORM: EDIT PRODUCT -->
         <section>
           <h2>Redigera produkt</h2>
@@ -147,21 +139,47 @@
                   <label for="edit-product-category">Kategori</label>
                   <select id="edit-product-category" name="product-category" required></select>
               </div>
-              <button type="submit">Redigera</button> <!-- Added type="submit" -->
+              <button type="submit">Redigera</button>
           </form>
       </section>
-      <div id="admin-dashboard">
-        <h2>Form Submissions</h2>
-        <ul id="submissions-list">
-            <!-- List of submissions will be dynamically added here -->
-        </ul>
-    </div>
-    
     </main>
     <footer>
         <div class="footer-links"><a href="admin.html">Admin</a></div>
         <div class="footer-links"><a href="contact.html">Kontakt</a></div>
         <div class="footer-links"><a href="productsearch.html">Sök produkt</a></div>
     </footer>
+
+    <script>
+        // Image Preview for Category
+        document.getElementById('create-category-image').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('category-preview');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Category Image Preview" style="max-width: 200px;"/>`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = ''; // Clear the preview if no file is selected
+            }
+        });
+
+        // Image Preview for Product Thumbnails
+        document.querySelectorAll('.thumbnail').forEach((thumbnail, index) => {
+            thumbnail.addEventListener('click', () => {
+                const mainImagePreview = document.getElementById('main-image-preview');
+                const file = document.getElementById('create-product-image').files[index];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        mainImagePreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

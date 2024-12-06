@@ -23,7 +23,7 @@ if (newCategoryForm) {
             let imageBlob = fileReader.result;
             database.addCategory(formData.get("category-name"), imageBlob, formData.get("category-group")).then(() => {
                 buildCategoryMenuOptions(newProductCatList);
-            });
+            }).catch(err => console.error("Error adding category:", err)); // Catch any errors
         });
 
         if (formImage) {
@@ -182,7 +182,7 @@ async function loadProducts() {
 
 // Fill the edit product form with selected product details
 function fillEditProductForm(product) {
-    console.log("Filling form with product:"). value = product.hej;
+    console.log("Filling form with product:", product);
     document.querySelector("#edit-product-name").value = product.name;
     document.querySelector("#edit-product-desc").value = product.description; 
     document.querySelector("#edit-product-price").value = product.price;
@@ -244,8 +244,7 @@ function readProductImage(formImage) {
     });
 }
 
-loadProducts();
-
+// Load and display submissions
 async function loadSubmissions() {
     const db = await openDatabase();
     const transaction = db.transaction("submissions", "readonly");
@@ -274,16 +273,41 @@ async function displaySubmissions() {
         listItem.classList.add("submission-item");
 
         const content = `
-            <strong>${submission.name} ${submission.surname}</strong><br>
-            <em>${submission.email}</em><br>
-            <p>${submission.message}</p>
+            <strong>${submission.name} ${submission.surname}</strong>
+            <br>Email: ${submission.email}
+            <br>Phone: ${submission.phone}
+            <br>Message: ${submission.message}
         `;
-
         listItem.innerHTML = content;
         submissionsList.appendChild(listItem);
     });
 }
 
+// Load and display low stock products
+async function loadLowStockProducts() {
+    const lowStockProducts = await database.getLowStockProducts(); // Fetch low stock products from the database
+    const lowStockList = document.querySelector("#low-stock-list");
+
+    console.log("Fetched low stock products:", lowStockProducts); // Log low stock products
+
+    lowStockList.innerHTML = ""; // Clear existing items
+
+    lowStockProducts.forEach(product => {
+        const listItem = document.createElement("li");
+        listItem.classList.add("low-stock-item");
+
+        const content = `
+            <strong>${product.name}</strong> (Lagernivå: ${product.stock})
+        `;
+        listItem.innerHTML = content; // Set the inner HTML for the list item
+        lowStockList.appendChild(listItem); // Append the list item to the list
+    });
+}
+
+// Initialize everything
 document.addEventListener("DOMContentLoaded", () => {
+    loadCategories();
+    loadProducts();
+    loadLowStockProducts();
     displaySubmissions();
 });

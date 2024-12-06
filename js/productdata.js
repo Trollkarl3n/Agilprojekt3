@@ -40,8 +40,8 @@ const productList = [
     name: "Jeans jacka",
     date: "2024-12-04 ",
     price: "400",
-    description:
-      "BingoBongoBangoBungo",
+    description: "BingoBongoBangoBungo",
+    amount: 5, 
     image: [
       "images/MoclerSeacondHandJacket.webp",
       "images/Streetware Jacket.webp",
@@ -54,8 +54,8 @@ const productList = [
     name: "Annan jacka",
     date: "2024-12-04",
     price: "600",
-    description:
-      "BingoBongoBango",
+    description: "BingoBongoBango",
+    amount: 6, 
     image: [
       "images/Streetware Jacket.webp",
       "images/MoclerSeacondHandJacket.webp",
@@ -67,9 +67,8 @@ const productList = [
     name: "Läderjacka",
     date: "2024-12-04",
     price: "550",
-    description:
-      "BingoBongo",
-    amount: 10,
+    description: "BingoBongo",
+    amount: 1,
     image: [
       "images/Streetware Jacket.webp",
       "images/MoclerSeacondHandJacket.webp",
@@ -79,14 +78,13 @@ const productList = [
     ],
   },
   {
-    productid: 3,
+    productid: 4,
     category: "1",
-    name: "Annan jacwwwka",
+    name: "Annan jacka",
     date: "2024-12-04",
     price: "600",
-    description:
-      "Bingo",
-    amount: 25,
+    description: "Bingo",
+    amount: 2,
     image: [
       "images/Streetware Jacket.webp",
       "images/MoclerSeacondHandJacket.webp",
@@ -197,3 +195,29 @@ export async function getProductsById(productsIdArray) {
   );
   return matchedProducts;
 }
+
+// Add this function to get low stock products
+export async function getLowStockProducts() {
+  const products = await getProducts();
+  return products.filter(product => product.amount <= 2);
+}
+
+// Function to display low stock products in the admin panel
+export async function displayLowStockProducts() {
+  const lowStockList = document.querySelector("#low-stock-list"); // Assuming this element exists in your HTML
+  const lowStockProducts = await getLowStockProducts();
+
+  lowStockList.innerHTML = ""; // Clear previous entries
+  if (lowStockProducts.length === 0) {
+    lowStockList.innerHTML = "<li>No low stock products available.</li>";
+  } else {
+    lowStockProducts.forEach(product => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${product.name} - Amount: ${product.amount}`;
+      lowStockList.appendChild(listItem);
+    });
+  }
+}
+
+// Call this function to display low stock products on page load or when appropriate
+document.addEventListener("DOMContentLoaded", displayLowStockProducts);
