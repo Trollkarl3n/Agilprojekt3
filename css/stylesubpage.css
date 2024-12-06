@@ -9,6 +9,7 @@ body {
   
 h1, h2 {
   color: #222;
+  text-align: center;
 }
   
 a {
@@ -86,36 +87,75 @@ header #nav-button {
   display: none;
 }
 
-/* Search Container */
-.search-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  z-index: 1000;
-  display: none;
+/* Stil för produktlistan */
+.product-list-card {
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  max-width: 800px; /* Sätt en maxbredd för korten */
 }
 
-.search-container .search-close-button img {
-  width: 30px;
-  height: 30px;
+.product-list-card img {
+  width: 700px; /* Justera bredden för mindre bilder */
+  height: 400px; /* Justera höjden för mindre bilder */
+  object-fit: cover; /* Ser till att bilden behåller proportioner */
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.search-container #product-search-result {
-  max-width: 800px;
-  margin: 20px auto;
-  background: #fff;
-  color: #333;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.product-list-card h3 {
+  font-size: 1rem; /* Mindre textstorlek för rubriken */
+  margin: 10px 0;
+}
+
+.product-list-card div {
+  font-size: 0.9rem; /* Mindre textstorlek för beskrivningen */
+}
+
+.product-list-card-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.product-list-card-footer a {
+  font-size: 0.8rem;
+  color: #0073e6;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid #0073e6;
+  border-radius: 3px;
+}
+
+.product-list-card-footer a:hover {
+  background-color: #0073e6;
+  color: #fff;
+}
+
+/* Justeringar för layout på små skärmar */
+@media (max-width: 768px) {
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Två kolumner */
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .product-list-card {
+    max-width: 120px; /* Mindre kort på små skärmar */
+  }
+
+  .product-list-card img {
+    width: 80px; /* Mindre bilder på små skärmar */
+    height: 80px;
+  }
 }
   
 /* Main Content */
