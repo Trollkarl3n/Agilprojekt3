@@ -245,3 +245,45 @@ function readProductImage(formImage) {
 }
 
 loadProducts();
+
+async function loadSubmissions() {
+    const db = await openDatabase();
+    const transaction = db.transaction("submissions", "readonly");
+    const store = transaction.objectStore("submissions");
+    const request = store.getAll();
+
+    return new Promise((resolve, reject) => {
+        request.onsuccess = () => {
+            console.log("Fetched submissions:", request.result); // Log fetched data
+            resolve(request.result);
+        };
+        request.onerror = () => reject("Unable to fetch submissions.");
+    });
+}
+
+async function displaySubmissions() {
+    const submissions = await loadSubmissions();
+    const submissionsList = document.querySelector("#submissions-list");
+
+    console.log("Displaying submissions:", submissions); // Log submissions being displayed
+
+    submissionsList.innerHTML = "";
+
+    submissions.forEach(submission => {
+        const listItem = document.createElement("li");
+        listItem.classList.add("submission-item");
+
+        const content = `
+            <strong>${submission.name} ${submission.surname}</strong><br>
+            <em>${submission.email}</em><br>
+            <p>${submission.message}</p>
+        `;
+
+        listItem.innerHTML = content;
+        submissionsList.appendChild(listItem);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    displaySubmissions();
+});
