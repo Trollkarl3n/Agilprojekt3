@@ -4,84 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <h1>Contact Us</h1>
-    <form class="contact-form">
-        <input type="text" name="name" placeholder="First Name" required>
-        <input type="text" name="surname" placeholder="Last Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" placeholder="Your message" required></textarea>
-        <button type="submit">Send</button>
-    </form>
-
+    <link rel="stylesheet" href="css/stylesubpage.css" />
     <link rel="stylesheet" href="css/contact.css" />
-    <link rel="stylesheet" href="css/contact.css"/>
-    <link rel="stylesheet" href="css/stylesubpage.css"/>
+</head>
+<body class="subpage">
 
-    <title>Framsida</title>
-  </head>
-  <body class="subpage">
-    <!-- Page header with logo, nav menu and hero image -->
+    <!-- Page header with logo, nav menu, and hero image -->
     <header>
-      <section class="hero">
-        <nav>
-          <div class="logo">
-            <h1><a href="index.html">Cool Fashion</a></h1>
-          </div>
-          <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-          <label for="nav-toggle" class="hamburger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </label>
-          <ul class="main-menu">
-            <li><a href="category.html?group=clothes">Kläder</a></li>
-            <li><a href="category.html?group=skate">Test</a></li>
-            <li><a href="productcart.html">Varukorg</a></li>
-            <li><a href="wishlist.html">Önskelista</a></li>
-          </ul>
-        </nav>
-      </section>
+        <section class="hero">
+            <nav>
+                <div class="logo">
+                    <h1><a href="index.html">Cool Fashion</a></h1>
+                </div>
+                <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+                <label for="nav-toggle" class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                <ul class="main-menu">
+                    <li><a href="category.html?group=clothes">Kläder</a></li>
+                    <li><a href="category.html?group=skate">Test</a></li>
+                    <li><a href="productcart.html">Varukorg</a></li>
+                    <li><a href="wishlist.html">Önskelista</a></li>
+                </ul>
+            </nav>
+        </section>
     </header>   
+
     <!-- Main content section -->
     <main>
-      <section class="contact-section">
-        <h2>Kontakt</h2>
-        <form class="contact-form">
-          <div class="contact-label-input">
-            <label for="name">Namn:</label>
-            <input id="name" />
-          </div>
-          <div class="contact-label-input">
-            <label for="surname">Efternamn:</label>
-            <input id="surname" />
-          </div>
-          <div class="contact-label-input">
-            <label for="email">Mejl:</label>
-            <input id="email" />
-          </div>
-          <div class="contact-label-input">
-            <label for="message">Meddelande:</label>
-            <textarea name="message" id="message"></textarea>
-          </div>
-          <button class="contact-button">Skicka</button>
-        </form>
-      </section>
+        <section class="contact-section">
+            <h2>Kontakt</h2>
+            <form class="contact-form">
+                <div class="contact-label-input">
+                    <label for="name">Namn:</label>
+                    <input id="name" type="text" required />
+                </div>
+                <div class="contact-label-input">
+                    <label for="surname">Efternamn:</label>
+                    <input id="surname" type="text" required />
+                </div>
+                <div class="contact-label-input">
+                    <label for="email">Mejl:</label>
+                    <input id="email" type="email" required />
+                </div>
+                <div class="contact-label-input">
+                    <label for="message">Meddelande:</label>
+                    <textarea name="message" id="message" required></textarea>
+                </div>
+                <button class="contact-button" type="submit">Skicka</button>
+            </form>
+        </section>
     </main>
+
     <!-- Page footer -->
     <footer>
-      <div class="footer-links">
-        <a href="admin.html">Admin</a>
-      </div>
-      <div class="footer-links">
-        <a href="contact.html">Kontakt</a>
-      </div>
-      <div class="footer-links">
-        <a href="productsearch.html">Sök produkt</a>
-      </div>
+        <div class="footer-links">
+            <a href="admin.html">Admin</a>
+        </div>
+        <div class="footer-links">
+            <a href="contact.html">Kontakt</a>
+        </div>
+        <div class="footer-links">
+            <a href="productsearch.html">Sök produkt</a>
+        </div>
     </footer>
-  </body>
+</body>
 </html>
+
