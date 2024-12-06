@@ -1,34 +1,40 @@
-/* Carousel Styles */
 .carousel {
-  position: relative;
+  display: flex;
   overflow: hidden;
-  border-radius: 10px;
-}
-  
-.carousel img {
-  display: block;
   width: 100%;
-  height: auto;
-  transition: transform 0.5s ease;
+  border-radius: 10px;
+  position: relative;
 }
-  
-.carousel img:hover {
-  transform: scale(1.05);
+
+.carousel img {
+  flex: 0 0 100%; /* Varje bild tar 100% av karusellens bredd */
+  transition: transform 0.5s ease-in-out;
 }
-  
+
 button.prev,
 button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 24px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
   z-index: 1;
+  width: 40px;
+  height: 40px;
 }
-  
-.carousel-container {
-  position: relative;
+
+button.prev {
+  left: 10px;
 }
-  
-.carousel .active {
-  display: block;
+
+button.next {
+  right: 10px;
 }
-  
-.carousel img:not(.active) {
-  display: none;
+
+button:hover {
+  background: #0073e6;
 }
