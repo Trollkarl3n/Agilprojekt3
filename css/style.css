@@ -81,53 +81,16 @@ header .searchbox input {
   border-radius: 20px;
 }
 
-header .main-menu {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  background-color: #000;
-  width: 100%;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  left: 0;
-  border: 1px solid #fff;
-  padding: 10px;
-}
-
-header nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-header nav ul li {
-  margin: 10px 0;
-  text-align: center;
-}
-
-header nav ul li a {
-  color: #fff;
-  font-size: 18px;
-  transition: color 0.3s;
-}
-
-header nav ul li a:hover {
-  color: #ff6f61;
-}
-
-/* Hamburger Menu */
-.nav-toggle {
+/* Dold kryssruta för toggling */
+header #nav-toggle {
   display: none;
 }
 
+/* Hamburgarmenyn */
 .hamburger-menu {
   display: flex;
-  cursor: pointer;
   flex-direction: column;
+  cursor: pointer;
   gap: 5px;
 }
 
@@ -135,15 +98,44 @@ header nav ul li a:hover {
   display: block;
   width: 25px;
   height: 3px;
-  background-color: #fff;
+  background-color: white;
   transition: all 0.3s ease;
 }
 
-/* Mobile and Desktop Layout - Always Hamburgermeny */
-.hamburger-menu {
-  display: flex;
+/* Menyn är dold som standard */
+.main-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100px; /* Justerat för att ligga längre ner */
+  right: 20px;
+  background-color: #333;
+  border: 1px solid #444;
+  padding: 10px;
+  width: 200px;
+  z-index: 10;
 }
 
+/* Menylänkar */
+.main-menu li {
+  margin: 10px 0;
+}
+
+.main-menu li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  text-align: center;
+}
+
+.main-menu li a:hover {
+  color: #0073e6;
+}
+
+/* När hamburgarmenyn är aktiv */
 #nav-toggle:checked + .hamburger-menu span:nth-child(1) {
   transform: rotate(45deg);
   position: relative;
@@ -164,43 +156,13 @@ header nav ul li a:hover {
   display: flex;
 }
 
-/* Mobile Layout */
+/* Responsiv Design - Anpassar sig på mindre skärmar */
 @media (max-width: 768px) {
-  /* Ensures hamburger menu always works even on mobile */
-  header .main-menu {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      background-color: #000;
-      border: 1px solid #fff;
-      padding: 10px;
-      width: 200px;
-  }
-
-  .hamburger-menu {
-      display: flex;
-  }
-
-  #nav-toggle:checked + .hamburger-menu span:nth-child(1) {
-      transform: rotate(45deg);
-      position: relative;
-      top: 7px;
-  }
-
-  #nav-toggle:checked + .hamburger-menu span:nth-child(2) {
-      opacity: 0;
-  }
-
-  #nav-toggle:checked + .hamburger-menu span:nth-child(3) {
-      transform: rotate(-45deg);
-      position: relative;
-      top: -7px;
-  }
-
-  #nav-toggle:checked ~ .main-menu {
-      display: flex;
+  /* Justerar menyens position och bredd på små skärmar */
+  .main-menu {
+    width: 100%;
+    right: 0;
+    top: 50px;
   }
 }
 
@@ -236,7 +198,6 @@ header nav ul li a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Search Product Card */
 .search-product-card {
   display: flex;
   align-items: center;
@@ -330,20 +291,20 @@ footer .footer-links a:hover {
 /* Responsive Design */
 @media (max-width: 768px) {
   header nav ul {
-      flex-direction: column;
-      text-align: center;
+    flex-direction: column;
+    text-align: center;
   }
 
   header nav ul li {
-      margin: 10px 0;
+    margin: 10px 0;
   }
 
   main {
-      padding: 15px;
+    padding: 15px;
   }
 
   .latest-products-container {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 }
 

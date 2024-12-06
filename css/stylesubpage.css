@@ -50,41 +50,103 @@ header {
   color: #fff;
   padding: 10px 0;
 }
-  
+
 header .logo h1 {
   margin: 0;
   padding: 0 20px;
   font-size: 1.5rem;
 }
-  
+
 header nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  position: relative;
 }
-  
-header nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-  
-header nav ul li {
-  margin: 0 15px;
-}
-  
-header nav ul li a {
-  color: #fff;
-}
-  
+
+/* Dold kryssruta för toggling */
 header #nav-toggle {
   display: none;
 }
-  
-header #nav-button {
+
+/* Hamburgarmenyn */
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+/* Menyn är dold som standard */
+.main-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #333;
+  border: 1px solid #444;
+  padding: 10px;
+  width: 200px;
+  z-index: 10;
+}
+
+/* Menylänkar */
+.main-menu li {
+  margin: 10px 0;
+}
+
+.main-menu li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  text-align: center;
+}
+
+.main-menu li a:hover {
+  color: #0073e6;
+}
+
+/* När hamburgarmenyn är aktiv */
+#nav-toggle:checked + .hamburger-menu span:nth-child(1) {
+  transform: rotate(45deg);
+  position: relative;
+  top: 7px;
+}
+
+#nav-toggle:checked + .hamburger-menu span:nth-child(2) {
+  opacity: 0;
+}
+
+#nav-toggle:checked + .hamburger-menu span:nth-child(3) {
+  transform: rotate(-45deg);
+  position: relative;
+  top: -7px;
+}
+
+#nav-toggle:checked ~ .main-menu {
+  display: flex;
+}
+
+/* Responsiv Design - Anpassar sig på mindre skärmar */
+@media (max-width: 768px) {
+  .main-menu {
+    width: 100%;
+    right: 0;
+    top: 50px;
+  }
 }
 
 /* Stil för produktlistan */
