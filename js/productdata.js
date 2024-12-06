@@ -15,19 +15,19 @@ const categoryList = [
   {
     categoryid: 1,
     name: "Jackor",
-    image: "images/categories/jackor.png",
+    image: "",
     group: "clothes",
   },
   {
     categoryid: 2,
     name: "Hooodies",
-    image: "images/categories/hoodies.png",
+    image: "",
     group: "clothes",
   },
   {
     categoryid: 3,
     name: "T-shirts",
-    image: "images/categories/tshirts.png",
+    image: "",
     group: "clothes",
   },
 ];
@@ -41,12 +41,11 @@ const productList = [
     date: "2024-12-04 ",
     price: "400",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
-    amount: 20,
+      "BingoBongoBangoBungo",
     image: [
-      "images/products/jacketjeans1.png",
-      "images/products/jacketjeans2.png",
-      "images/products/jacketjeans3.png",
+      "images/MoclerSeacondHandJacket.webp",
+      "images/Streetware Jacket.webp",
+      "images/MoclerSeacondHandJacket.webp",
     ],
   },
   {
@@ -56,11 +55,10 @@ const productList = [
     date: "2024-12-04",
     price: "600",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
-    amount: 25,
+      "BingoBongoBango",
     image: [
-      "images/products/jacketmisc1.png",
-      "images/products/jacketmisc2.png",
+      "images/Streetware Jacket.webp",
+      "images/MoclerSeacondHandJacket.webp",
     ],
   },
   {
@@ -70,9 +68,15 @@ const productList = [
     date: "2024-12-04",
     price: "550",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
+      "BingoBongo",
     amount: 10,
-    image: ["images/products/jacketleather.png"],
+    image: [
+      "images/Streetware Jacket.webp",
+      "images/MoclerSeacondHandJacket.webp",
+      "images/Streetware Jacket.webp",
+      "images/MoclerSeacondHandJacket.webp",
+      "images/Streetware Jacket.webp"
+    ],
   },
   {
     productid: 3,
@@ -81,11 +85,11 @@ const productList = [
     date: "2024-12-04",
     price: "600",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, id nisi excepturi soluta esse animi tempore distinctio? Praesentium illo molestias doloribus ex, exercitationem maiores beatae, aliquid nesciunt, impedit sunt rerum.",
+      "Bingo",
     amount: 25,
     image: [
-      "images/products/jacketmisc1.png",
-      "images/products/jacketmisc2.png",
+      "images/Streetware Jacket.webp",
+      "images/MoclerSeacondHandJacket.webp",
     ],
   },
 ];
