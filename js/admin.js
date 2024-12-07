@@ -3,6 +3,25 @@
 */
 import * as database from "./database.js";
 import * as productdata from "./productdata.js";
+import { countAllProducts } from './productdata.js';  // Adjust the path if needed
+// Function to update the product count on the admin page
+async function updateProductCount() {
+    try {
+        // Call the countAllProducts function to get the total number of products
+        const productCount = await countAllProducts();
+
+        // Get the element where the count will be displayed
+        const productCountElement = document.getElementById('product-count');
+        
+        // Update the text content of the element with the product count
+        productCountElement.textContent = productCount;
+    } catch (error) {
+        console.error('Error fetching product count:', error);
+    }
+}
+
+// Call the updateProductCount function when the page loads
+document.addEventListener('DOMContentLoaded', updateProductCount);
 
 //////////////////////// ADD CATEGORIES ////////////////////////
 

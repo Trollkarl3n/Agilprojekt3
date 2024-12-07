@@ -221,3 +221,8 @@ export async function displayLowStockProducts() {
 
 // Call this function to display low stock products on page load or when appropriate
 document.addEventListener("DOMContentLoaded", displayLowStockProducts);
+// Function to count all products
+export async function countAllProducts() {
+  const products = await getProducts(); // Fetch all products (hardcoded + added via IndexedDB)
+  return products.length;  // Return the number of products
+}
