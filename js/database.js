@@ -9,10 +9,10 @@ let db = null;
 function initializeDB() {
     return new Promise((resolve, reject) => {
         if (!db) {
-            const dbOpen = window.indexedDB.open("skateshop", 6); // Ensure version is correct
+            const dbOpen = window.indexedDB.open("skateshop", 6);
 
             dbOpen.addEventListener("error", (event) => {
-                console.error("Could not open local IndexedDB!", event);
+                console.log("Could not open local IndexedDB!");
                 reject("Could not open local IndexedDB!");
             });
 
@@ -22,7 +22,7 @@ function initializeDB() {
                 resolve();
             });
 
-            // Setup: Create DB stores for categories, products, and cart
+            // Setup: Create DB stores for categories, products, cart, and wishlist
             dbOpen.addEventListener("upgradeneeded", (event) => {
                 db = event.target.result;
 
@@ -49,7 +49,7 @@ function initializeDB() {
                     dbProducts.createIndex("price", "price", { unique: false });
                     dbProducts.createIndex("category", "category", { unique: false });
                     dbProducts.createIndex("image", "image", { unique: false });
-                    dbProducts.createIndex("stock", "stock", { unique: false });
+                    dbProducts.createIndex("stock", "stock", { unique: false }); // Ensure stock is indexed
                 }
 
                 // Cart table
@@ -100,7 +100,7 @@ export async function addCategory(categoryName, categoryImage, categoryGroup) {
             };
 
             request.onerror = (event) => {
-                console.error("DB transaction error!", event);
+                console.log("DB transaction error!", event);
                 reject(event);
             };
         }
@@ -119,7 +119,7 @@ export async function addProduct(productName, productDescription, productPrice, 
                 price: productPrice,
                 category: productCategory,
                 image: JSON.stringify(Array.isArray(productImage) ? productImage : [productImage]),
-                stock: productStock,
+                stock: productStock, // Ensure stock is being set here
             };
             const dbTrans = db.transaction(["products"], "readwrite");
             const store = dbTrans.objectStore("products");
@@ -131,11 +131,9 @@ export async function addProduct(productName, productDescription, productPrice, 
             };
 
             request.onerror = (event) => {
-                console.error("DB transaction error!", event);
+                console.log("DB transaction error!", event);
                 reject(event);
             };
-        } else {
-            reject("Database not initialized");
         }
     });
 }
@@ -175,8 +173,6 @@ export async function updateProduct(productId, updatedData) {
                 console.error("Failed to fetch product for update:", event.target.error);
                 reject(event.target.error);
             };
-        } else {
-            reject("Database not initialized");
         }
     });
 }
@@ -199,8 +195,6 @@ export async function removeProduct(productId) {
                 console.error("Failed to delete product:", event.target.error);
                 reject(event.target.error);
             };
-        } else {
-            reject("Database not initialized");
         }
     });
 }
@@ -224,11 +218,9 @@ export async function addToCart(productId, productAmount) {
             };
 
             request.onerror = (event) => {
-                console.error("DB transaction error! Product already in cart", event);
+                console.log("DB transaction error! Product already in cart", event);
                 reject(event);
             };
-        } else {
-            reject("Database not initialized");
         }
     });
 }
@@ -251,11 +243,9 @@ export async function addToWishlist(productId) {
             };
 
             request.onerror = (event) => {
-                console.error("DB transaction error! Product already in wishlist", event);
+                console.log("DB transaction error! Product already in wishlist", event);
                 reject(event);
             };
-        } else {
-            reject("Database not initialized");
         }
     });
 }
@@ -274,6 +264,46 @@ export async function getCategories() {
 
             dbReq.addEventListener("error", (event) => {
                 console.log("Error fetching categories!", event);
+                reject(event);
+            });
+        }
+    });
+}
+
+// Get list of admin-added wishlist from IndexedDB
+export async function getWishlist() {
+    await initializeDB();
+    return new Promise((resolve, reject) => {
+        if (db) {
+            const dbReq = db.transaction("wishlist").objectStore("wishlist").getAll();
+
+            dbReq.addEventListener("success", (event) => {
+                console.log("Fetched wishlist list...");
+                resolve(event.target.result);
+            });
+
+            dbReq.addEventListener("error", (event) => {
+                console.log("Error fetching wishlist!", event);
+                reject(event);
+            });
+        }
+    });
+}
+
+// Get list of admin-added shopping cart from IndexedDB
+export async function getCart() {
+    await initializeDB();
+    return new Promise((resolve, reject) => {
+        if (db) {
+            const dbReq = db.transaction("shoppingcart").objectStore("shoppingcart").getAll();
+
+            dbReq.addEventListener("success", (event) => {
+                console.log("Fetched cart list...");
+                resolve(event.target.result);
+            });
+
+            dbReq.addEventListener("error", (event) => {
+                console.log("Error fetching cart!", event);
                 reject(event);
             });
         }
@@ -300,41 +330,8 @@ export async function getProducts() {
     });
 }
 
-// Display low stock products
-export async function displayLowStockProducts() {
-  const lowStockList = document.querySelector("#low-stock-list");
-  try {
-      const products = await getProducts(); // Fetch all products from IndexedDB
-      console.log("All products:", products); // Log fetched products
-
-      const lowStockProducts = products.filter(product => product.amount <= 3); // Change stock to amount
-      console.log("Low stock products:", lowStockProducts); // Log filtered products
-
-      lowStockList.innerHTML = ""; // Clear existing list items
-      lowStockProducts.forEach(product => {
-          const listItem = document.createElement('li');
-          listItem.textContent = `${product.name} - Available: ${product.amount}`; // Change stock to amount
-          lowStockList.appendChild(listItem);
-      });
-
-      if (lowStockProducts.length === 0) {
-          lowStockList.innerHTML = "<li>No products low in stock.</li>";
-      }
-  } catch (error) {
-      console.error('Error fetching low stock products:', error);
-  }
-}
-
-// Call the function on page load
-document.addEventListener('DOMContentLoaded', () => {
-  displayLowStockProducts();
-});
-
-// Helper function to format timestamp into date
+// Helper function to format the timestamp to date
 function timestampToDate(timestamp) {
     const date = new Date(timestamp);
-    return date.toLocaleDateString(); // Adjust date format as needed
+    return date.toISOString().split('T')[0]; // Format: YYYY-MM-DD
 }
-
-// Initialize the database when the script is loaded
-initializeDB();
