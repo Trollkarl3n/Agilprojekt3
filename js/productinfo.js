@@ -35,17 +35,24 @@ async function loadProductData() {
       // Product elements
       const productName = document.querySelector(".product-name");
       const productDesc = document.querySelector(".product-desc");
-      const productPrice = document.querySelector(".product-price");
+      const productPrice = document.querySelector(".product-price span"); // Ensure you select the span for the price
       const productImage = document.querySelector(".product-image");
       const productElement = document.querySelector(".productinfo-page");
-      const productStock = document.querySelector(".product-stock");
+      const productStock = document.querySelector(".product-stock span"); // Select the span for stock info
 
       // Setting product details on the page
       productName.innerText = product.name;
       productDesc.innerText = product.description;
-      productPrice.innerText = product.price;
+      productPrice.innerText = `${product.price} kr`; // Update price with currency
       productElement.id = `productid-${productId}`;
-      productStock.lastElementChild.innerText = `I Lager (${product.amount})`;
+      productStock.innerText = `I Lager (${product.amount})`; // Update stock level
+
+      // Check for low stock
+      if (product.amount < 10) {
+        productStock.classList.add("low-stock");
+        // Optional: Add a low stock warning message here
+        productStock.innerText += " - Low Stock!";
+      }
 
       let currentImageIndex = 0;
 
@@ -118,6 +125,8 @@ async function loadProductData() {
       });
 
       return product;
+    } else {
+      console.log("Product not found");
     }
   }
 }
@@ -126,9 +135,12 @@ const buyButton = document.querySelector(".product-buy");
 buyButton.addEventListener("click", async (event) => {
   try {
     const product = await loadProductData();
-    if (product) {
-      db.addToCart(product.productid, 1);
+    if (product && product.amount > 0) { // Check if there's stock available
+      await db.addToCart(product.productid, 1);
       console.log("added to cart");
+      // Update stock level after adding to cart
+      product.amount -= 1;
+      document.querySelector(".product-stock span").innerText = `I Lager (${product.amount})`;
     } else {
       console.log("Error adding product data");
     }
@@ -145,7 +157,7 @@ wishlistButton.addEventListener("click", async (event) => {
     const wishlistIdArray = checkWishlist.map((product) => product.productid);
 
     if (!wishlistIdArray.includes(product.productid)) {
-      db.addToWishlist(product.productid);
+      await db.addToWishlist(product.productid);
       console.log("added to wishlist");
       alert("Product added to wishlist");
     } else {
@@ -157,5 +169,37 @@ wishlistButton.addEventListener("click", async (event) => {
   }
 });
 
+// Example to check the shopping cart contents
 db.getShoppingCart().then((list) => console.log(list));
 
+// Add this function to fetch and display low stock products
+async function fetchAndDisplayLowStockProducts() {
+  try {
+    const lowStockProducts = await db.getLowStockProducts(); // Fetch low stock products from your database
+    displayLowStockProducts(lowStockProducts);
+  } catch (error) {
+    console.error("Error fetching low stock products:", error);
+  }
+}
+
+function displayLowStockProducts(lowStockProducts) {
+  const container = document.getElementById("low-stock-products"); // Ensure this ID matches your HTML
+  if (container) {
+    container.innerHTML = ""; // Clear previous content
+    if (lowStockProducts.length === 0) {
+      container.innerHTML = "No low stock products available.";
+      return;
+    }
+    
+    lowStockProducts.forEach(product => {
+      const productElement = document.createElement("div");
+      productElement.innerHTML = `${product.name} - ${product.stock} units left`;
+      container.appendChild(productElement);
+    });
+  } else {
+    console.error("Container for low stock products not found!");
+  }
+}
+
+// Call this function after the DOM is ready
+document.addEventListener("DOMContentLoaded", fetchAndDisplayLowStockProducts);

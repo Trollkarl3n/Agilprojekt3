@@ -102,6 +102,10 @@
             <input id="create-product-price" name="product-price" type="number" min="0" value="0" required />
         </div>
         <div>
+            <label for="create-product-stock">Lagernivå</label> 
+            <input type="number" id="create-product-stock" name="product-stock" min="0" required />
+        </div>
+        <div>
             <label for="create-product-desc">Produktbeskrivning</label>
             <textarea id="create-product-desc" name="product-desc" rows="5" cols="60" required></textarea>
         </div>
@@ -134,46 +138,48 @@
     </form>
 </section>
 
+
         <!-- FORM: EDIT PRODUCT -->
         <section>
-          <h2>Redigera produkt</h2>
-          <form id="edit-product-form" method="POST">
-              <div>
-                  <label for="edit-product-select">Välj produkt att redigera</label>
-                  <select id="edit-product-select" name="productlist" required>
-                  </select>
-              </div>
-              <div>
-                  <label for="edit-product-name">Produktnamn</label>
-                  <input type="text" id="edit-product-name" name="product-name" minlength="4" maxlength="50" required />
-              </div>
-              <div>
-                  <label for="edit-product-desc">Beskrivning</label>
-                  <textarea id="edit-product-desc" name="product-desc" minlength="10" required></textarea>
-              </div>
-              <div>
-                  <label for="edit-product-price">Pris</label>
-                  <input type="number" id="edit-product-price" name="product-price" min="0.01" step="0.01" required />
-              </div>
-              <div>
-                  <label for="edit-product-stock">Lagernivå</label> 
-                  <input type="number" id="edit-product-stock" name="product-stock" min="0" required />
-              </div>
-              <div>
-                  <label for="edit-product-category">Kategori</label>
-                  <select id="edit-product-category" name="product-category" required></select>
-              </div>
-              <button type="submit">Redigera</button>
-          </form>
-      </section>
-      <section>
-        <p>Total number of products: <span id="product-count">0</span></p>
-    </section>
-      <section>
-        <p>10 Latest added products</p>
-        <div id="latest-products" class="latest-products-container"></div>
-        <script src="js/productstartpage.js" type="module"></script>
-      </section>
+            <h2>Redigera produkt</h2>
+            <form id="edit-product-form" method="POST">
+                <div>
+                    <label for="edit-product-select">Välj produkt att redigera</label>
+                    <select id="edit-product-select" name="productlist" required></select>
+                </div>
+                <div>
+                    <label for="edit-product-name">Produktnamn</label>
+                    <input type="text" id="edit-product-name" name="product-name" minlength="4" maxlength="50" required />
+                </div>
+                <div>
+                    <label for="edit-product-desc">Beskrivning</label>
+                    <textarea id="edit-product-desc" name="product-desc" minlength="10" required></textarea>
+                </div>
+                <div>
+                    <label for="edit-product-price">Pris</label>
+                    <input type="number" id="edit-product-price" name="product-price" min="0.01" step="0.01" required />
+                </div>
+                <div>
+                    <label for="edit-product-stock">Lagernivå</label> 
+                    <input type="number" id="edit-product-stock" name="product-stock" min="0" required />
+                </div>
+                <div>
+                    <label for="edit-product-category">Kategori</label>
+                    <select id="edit-product-category" name="product-category" required></select>
+                </div>
+                <button type="submit">Redigera</button>
+            </form>
+        </section>
+        
+        <section>
+            <p>Total number of products: <span id="product-count">0</span></p>
+        </section>
+        
+        <section>
+            <p>10 Latest added products</p>
+            <div id="latest-products" class="latest-products-container"></div>
+            <script src="js/productstartpage.js" type="module"></script>
+        </section>
     </main>
     <footer>
         <div class="footer-links"><a href="admin.html">Admin</a></div>
@@ -202,7 +208,7 @@
         document.querySelectorAll('.thumbnail').forEach((thumbnail, index) => {
             thumbnail.addEventListener('click', () => {
                 const mainImagePreview = document.getElementById('main-image-preview');
-                const file = document.getElementById('create-product-image').files[index];
+                const file = document.getElementById('create-product-image-' + index).files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function(e) {

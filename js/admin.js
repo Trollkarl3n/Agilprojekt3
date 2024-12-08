@@ -3,7 +3,7 @@
 */
 import * as database from "./database.js"; // Ensure that this path is correct
 import * as productdata from "./productdata.js"; // Ensure that this path is correct
-import { countAllProducts } from './productdata.js'; // Adjust the path if needed
+import { countAllProducts } from './productdata.js';  // Adjust the path if needed
 
 // Function to update the product count on the admin page
 async function updateProductCount() {
@@ -212,6 +212,7 @@ function fillEditProductForm(product) {
     document.querySelector("#edit-product-desc").value = product.description; 
     document.querySelector("#edit-product-price").value = product.price;
     document.querySelector("#edit-product-category").value = product.category;
+    document.querySelector("#edit-product-stock").value = product.stock; // Set stock level
 
     // Clear the image previews and set the main image
     document.getElementById("main-image-preview").src = product.image[0] || ""; 
@@ -229,6 +230,9 @@ async function onNewProductSubmit(productForm) {
     const formData = new FormData(productForm);
     const formImages = formData.getAll("product-image");
 
+    // Get stock level from the form
+    const stockLevel = formData.get("product-stock");
+
     // Get and encode selected product images
     for (const formImage of formImages) {
         try {
@@ -239,13 +243,14 @@ async function onNewProductSubmit(productForm) {
         }
     }
 
-    // Save the product
+    // Save the product with stock level
     const newProduct = await database.addProduct(
         formData.get("product-name"),
         formData.get("product-desc"),
         formData.get("product-price"),
         formData.get("product-category"),
-        images
+        images,
+        stockLevel // Include stock level
     );
 
     return newProduct;
@@ -260,53 +265,53 @@ function readProductImage(formImage) {
         });
 
         fileReader.addEventListener("error", (event) => {
-            reject("Unable to load file.");
+            reject(new Error("Error reading image file."));
         });
 
-        if (formImage) {
-            fileReader.readAsDataURL(formImage);
+        fileReader.readAsDataURL(formImage);
+    });
+}
+
+//////////////////////// EDIT PRODUCTS ////////////////////////
+const editProductForm = document.querySelector("#edit-product-form");
+if (editProductForm) {
+    editProductForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const selectedProductId = document.querySelector("#edit-product-select").value;
+        const updatedProduct = {
+            name: document.querySelector("#edit-product-name").value,
+            description: document.querySelector("#edit-product-desc").value,
+            price: parseFloat(document.querySelector("#edit-product-price").value),
+            category: document.querySelector("#edit-product-category").value,
+            stock: parseInt(document.querySelector("#edit-product-stock").value), // Capture stock level
+        };
+
+        try {
+            await database.updateProduct(selectedProductId, updatedProduct);
+            alert("Produkt uppdaterad!");
+            loadProducts(); // Refresh products after editing
+        } catch (error) {
+            console.error("Error updating product:", error);
         }
     });
 }
 
-// Load and display submissions
-async function loadSubmissions() {
-    const submissionsContainer = document.querySelector("#submissions-container");
-    try {
-        const submissions = await database.getSubmissions(); // Fetch submissions from the database
-        console.log("Fetched Submissions:", submissions);
+//////////////////////// DELETE PRODUCTS ////////////////////////
+const deleteProductForm = document.querySelector("#delete-product-form");
+if (deleteProductForm) {
+    deleteProductForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const selectedProductId = document.querySelector("#delete-product-select").value;
 
-        submissions.forEach(submission => {
-            const submissionDiv = document.createElement("div");
-            submissionDiv.innerText = `Name: ${submission.name}, Email: ${submission.email}, Message: ${submission.message}`;
-            submissionsContainer.appendChild(submissionDiv);
-        });
-    } catch (error) {
-        console.error("Error loading submissions:", error);
-    }
+        if (confirm("Är du säker på att du vill ta bort denna produkt?")) {
+            try {
+                await database.deleteProduct(selectedProductId);
+                alert("Produkt borttagen!");
+                loadProducts(); // Refresh product dropdown after deletion
+            } catch (error) {
+                console.error("Error deleting product:", error);
+            }
+        }
+    });
 }
-
-// Load low stock products
-async function loadLowStockProducts() {
-    const lowStockProductsContainer = document.querySelector("#low-stock-products");
-    try {
-        const lowStockProducts = await database.getLowStockProducts(); // Fetch low stock products from the database
-        console.log("Fetched Low Stock Products:", lowStockProducts);
-
-        lowStockProducts.forEach(product => {
-            const productDiv = document.createElement("div");
-            productDiv.innerText = `Name: ${product.name}, Stock: ${product.stock}`;
-            lowStockProductsContainer.appendChild(productDiv);
-        });
-    } catch (error) {
-        console.error("Error loading low stock products:", error);
-    }
-}
-
-// Call these functions on page load
-document.addEventListener("DOMContentLoaded", () => {
-    loadCategories();
-    loadProducts();
-    loadLowStockProducts(); // Ensure this function is called correctly
-    loadSubmissions(); // Ensure this function is called correctly
-});

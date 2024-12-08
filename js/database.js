@@ -1,6 +1,6 @@
 /*
-    Functions for temporarily storing user actions between pages. 
-    Using browser IndexedDB to track admin-added products/cats, and user shopping cart entries. 
+Functions for temporarily storing user actions between pages. 
+Using browser IndexedDB to track admin-added products/cats, and user shopping cart entries. 
 */
 
 let db = null;
@@ -10,7 +10,7 @@ function initializeDB() {
   return new Promise((resolve, reject) => {
     // Only do this if the DB has not already been set up...
     if (!db) {
-      const dbOpen = window.indexedDB.open("skateshop", 7); // Incremented version to 7
+      const dbOpen = window.indexedDB.open("skateshop", 8); // Incremented version to 8
 
       dbOpen.onsuccess = (event) => {
         console.log("Local IndexedDB opened...");
@@ -49,6 +49,7 @@ function initializeDB() {
           dbProducts.createIndex("price", "price", { unique: false });
           dbProducts.createIndex("category", "category", { unique: false });
           dbProducts.createIndex("image", "image", { unique: false });
+          dbProducts.createIndex("stock", "stock", { unique: false }); // Add stock index
         }
 
         // Cart table
@@ -112,18 +113,20 @@ export async function addProduct(
   productDescription,
   productPrice,
   productCategory,
-  productImage
+  productImage,
+  productStock // Ensure this parameter is correctly populated
 ) {
   await initializeDB();
   return new Promise((resolve, reject) => {
     if (db) {
       const newProduct = {
         name: productName,
-        date: timestampToDate(Date.now()),
+        date: Date.now(),
         description: productDescription,
         price: productPrice,
         category: productCategory,
         image: JSON.stringify(Array.isArray(productImage) ? productImage : [productImage]),
+        stock: productStock // This should contain the stock level
       };
       const dbTrans = db.transaction(["products"], "readwrite");
 
@@ -235,26 +238,39 @@ export async function getWishlist() {
 
 // Get list of admin-added products from IndexedDB.
 export async function getProducts() {
-  await initializeDB();
-  return new Promise((resolve, reject) => {
-    if (db) {
-      const dbStore = db.transaction("products").objectStore("products");
-      const dbReq = dbStore.getAll();
+    await initializeDB();
+    return new Promise((resolve, reject) => {
+      if (db) {
+        const dbStore = db.transaction("products").objectStore("products");
+        const dbReq = dbStore.getAll();
+  
+        dbReq.onsuccess = (event) => {
+          event.target.result.forEach((product, idx, arr) => {
+            arr[idx].image = JSON.parse(product.image);
+            arr[idx].stock = product.stock; // Ensure stock is properly retrieved
+          });
+          console.log("Fetched product list...", event.target.result);
+          resolve(event.target.result);
+        };
+  
+        dbReq.onerror = (event) => {
+          console.log("Error fetching products!", event);
+          reject(event);
+        };
+      }
+    });
+  }
 
-      dbReq.onsuccess = (event) => {
-        event.target.result.forEach((product, idx, arr) => {
-          arr[idx].image = JSON.parse(product.image);
-        });
-        console.log("Fetched product list...", event.target.result);
-        resolve(event.target.result);
-      };
+  export async function getProductById(productId) {
+    const db = await openDatabase(); // Replace with your database connection logic
+    const transaction = db.transaction('products', 'readonly');
+    const store = transaction.objectStore('products');
 
-      dbReq.onerror = (event) => {
-        console.log("Error fetching products!", event);
-        reject(event);
-      };
-    }
-  });
+    return new Promise((resolve, reject) => {
+        const request = store.get(productId);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
 }
 
 // Get list of cart from IndexedDB
@@ -277,6 +293,7 @@ export async function getShoppingCart() {
   });
 }
 
+// Update the product amount in the cart
 export async function updateCartProductAmount(key, updatedAmount) {
   return new Promise((resolve, reject) => {
     if (db) {
@@ -300,63 +317,75 @@ export async function updateCartProductAmount(key, updatedAmount) {
             reject(event.target.error);
           };
         } else {
-          console.error("Product not found in cart");
-          reject("Product not found");
+          console.error("Product not found in cart.");
+          reject("Product not found in cart.");
         }
       };
 
       getRequest.onerror = (event) => {
-        console.error("Failed to fetch product from cart:", event.target.error);
+        console.error("Failed to get product from cart:", event.target.error);
         reject(event.target.error);
       };
     }
   });
 }
 
-export async function removeFromCart(productId) {
-  await initializeDB();
+// Remove product from cart
+export async function removeFromCart(key) {
   return new Promise((resolve, reject) => {
     if (db) {
-      const dbTrans = db.transaction("shoppingcart", "readwrite");
-      const objectStore = dbTrans.objectStore("shoppingcart");
-      const dbReq = objectStore.delete(productId);
+      const objectStore = db.transaction("shoppingcart", "readwrite").objectStore("shoppingcart");
+      const deleteRequest = objectStore.delete(key);
 
-      dbReq.onsuccess = (event) => {
-        console.log("Product removed from cart", event);
+      deleteRequest.onsuccess = () => {
+        console.log(`Product with key ${key} removed from cart.`);
         resolve();
       };
 
-      dbReq.onerror = (event) => {
-        console.log("Error removing product from cart!", event);
-        reject(event);
+      deleteRequest.onerror = (event) => {
+        console.error("Failed to delete product from cart:", event.target.error);
+        reject(event.target.error);
       };
     }
   });
 }
 
-export async function removeFromWishlist(productId) {
-  await initializeDB();
+// Remove product from wishlist
+export async function removeFromWishlist(key) {
   return new Promise((resolve, reject) => {
     if (db) {
-      const dbTrans = db.transaction("wishlist", "readwrite");
-      const objectStore = dbTrans.objectStore("wishlist");
-      const dbReq = objectStore.delete(productId);
+      const objectStore = db.transaction("wishlist", "readwrite").objectStore("wishlist");
+      const deleteRequest = objectStore.delete(key);
 
-      dbReq.onsuccess = (event) => {
-        console.log("Product removed from wishlist", event);
+      deleteRequest.onsuccess = () => {
+        console.log(`Product with key ${key} removed from wishlist.`);
         resolve();
       };
 
-      dbReq.onerror = (event) => {
-        console.log("Error removing product from wishlist!", event);
-        reject(event);
+      deleteRequest.onerror = (event) => {
+        console.error("Failed to delete product from wishlist:", event.target.error);
+        reject(event.target.error);
       };
     }
   });
 }
 
-// Convert timestamp to date format
-function timestampToDate(timestamp) {
-  const date = new Date(timestamp);
-  return date.toISOString().slice(0, 10); // Format YYYY-MM-DD
+// Clear shopping cart
+export async function clearShoppingCart() {
+  return new Promise((resolve, reject) => {
+    if (db) {
+      const objectStore = db.transaction("shoppingcart", "readwrite").objectStore("shoppingcart");
+      const clearRequest = objectStore.clear();
+
+      clearRequest.onsuccess = () => {
+        console.log("Shopping cart cleared.");
+        resolve();
+      };
+
+      clearRequest.onerror = (event) => {
+        console.error("Failed to clear shopping cart:", event.target.error);
+        reject(event.target.error);
+      };
+    }
+  });
 }
