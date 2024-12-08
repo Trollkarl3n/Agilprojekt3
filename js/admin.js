@@ -1,19 +1,15 @@
 /*
     Script for the admin control panel page.
 */
-import * as database from "./database.js";
-import * as productdata from "./productdata.js";
-import { countAllProducts } from './productdata.js';  // Adjust the path if needed
+import * as database from "./database.js"; // Ensure that this path is correct
+import * as productdata from "./productdata.js"; // Ensure that this path is correct
+import { countAllProducts } from './productdata.js'; // Adjust the path if needed
+
 // Function to update the product count on the admin page
 async function updateProductCount() {
     try {
-        // Call the countAllProducts function to get the total number of products
         const productCount = await countAllProducts();
-
-        // Get the element where the count will be displayed
         const productCountElement = document.getElementById('product-count');
-        
-        // Update the text content of the element with the product count
         productCountElement.textContent = productCount;
     } catch (error) {
         console.error('Error fetching product count:', error);
@@ -24,15 +20,13 @@ async function updateProductCount() {
 document.addEventListener('DOMContentLoaded', updateProductCount);
 
 //////////////////////// ADD CATEGORIES ////////////////////////
-
 const newProductCatList = document.querySelector("#create-product-category");
 const newCategoryForm = document.querySelector("#create-category-form");
 
-// Submit handler for New Category form. 
+// Submit handler for New Category form.
 if (newCategoryForm) {
     newCategoryForm.addEventListener("submit", (event) => {
         event.preventDefault();
-
         const formData = new FormData(event.target);
         const fileReader = new FileReader();
         const formImage = formData.get("category-image");
@@ -40,9 +34,11 @@ if (newCategoryForm) {
         // Store the new category in the browser IndexedDB.
         fileReader.addEventListener("load", (event) => {
             let imageBlob = fileReader.result;
-            database.addCategory(formData.get("category-name"), imageBlob, formData.get("category-group")).then(() => {
-                buildCategoryMenuOptions(newProductCatList);
-            }).catch(err => console.error("Error adding category:", err)); // Catch any errors
+            database.addCategory(formData.get("category-name"), imageBlob, formData.get("category-group"))
+                .then(() => {
+                    buildCategoryMenuOptions(newProductCatList);
+                })
+                .catch(err => console.error("Error adding category:", err));
         });
 
         if (formImage) {
@@ -70,21 +66,21 @@ if (newCategoryForm && categoryImageInput) {
 }
 
 //////////////////////// ADD PRODUCTS ////////////////////////
-
-// Submit handler for New Product form. 
 const newProductForm = document.querySelector("#create-product-form");
 if (newProductForm) {
     newProductForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        onNewProductSubmit(event.target).then((product) => {
-            alert("Ny produkt skapad!");
-            event.target.reset();
-            document.querySelector("#product-preview").innerHTML = "";
-            loadProducts(); // Refresh product dropdown after adding a new product
-        }).catch((error) => {
-            console.error("Error creating new product!", error);
-        });
+        onNewProductSubmit(event.target)
+            .then((product) => {
+                alert("Ny produkt skapad!");
+                event.target.reset();
+                document.querySelector("#product-preview").innerHTML = "";
+                loadProducts(); // Refresh product dropdown after adding a new product
+            })
+            .catch((error) => {
+                console.error("Error creating new product!", error);
+            });
     });
 }
 
@@ -103,22 +99,30 @@ const mainImageSelect = document.getElementById("main-image-select");
 
 // Add event listeners for image inputs
 productImageInputs.forEach((input, index) => {
-    input.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                updatePreviews(index, reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+    if (input) { // Ensure the input exists
+        input.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    updatePreviews(index, reader.result);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                console.error(`Image input for index ${index} not found.`);
+            }
+        });
+    } else {
+        console.error(`Image input for index ${index} not found.`);
+    }
 });
 
 // Update thumbnail previews
 function updatePreviews(index, imageUrl) {
-    thumbnailPreviews[index].src = imageUrl; // Set thumbnail image
-    updateMainImagePreview(); // Update main image if the main image is selected
+    if (thumbnailPreviews[index]) { // Check if thumbnail exists
+        thumbnailPreviews[index].src = imageUrl; // Set thumbnail image
+        updateMainImagePreview(); // Update main image if the main image is selected
+    }
 }
 
 // Update main image preview based on selection
@@ -143,7 +147,7 @@ if (newProductCatList && newProductForm) {
 async function loadCategories() {
     try {
         const categories = await productdata.getCategories(); // Fetch categories from the database
-        console.log("Fetched Categories:", categories); // Log fetched categories
+        console.log("Fetched Categories:", categories);
 
         // Populate the create product category dropdown
         newProductCatList.innerHTML = "";
@@ -156,13 +160,15 @@ async function loadCategories() {
 
         // Populate the edit product category dropdown
         const editProductCategorySelect = document.querySelector("#edit-product-category");
-        editProductCategorySelect.innerHTML = ""; // Clear existing options
-        categories.forEach(category => {
-            const option = document.createElement("option");
-            option.value = category.categoryid;
-            option.innerText = category.name;
-            editProductCategorySelect.appendChild(option);
-        });
+        if (editProductCategorySelect) {
+            editProductCategorySelect.innerHTML = ""; // Clear existing options
+            categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category.categoryid;
+                option.innerText = category.name;
+                editProductCategorySelect.appendChild(option);
+            });
+        }
     } catch (error) {
         console.error("Error loading categories:", error);
     }
@@ -173,7 +179,7 @@ async function loadProducts() {
     const editProductSelect = document.querySelector("#edit-product-select");
     try {
         const products = await database.getProducts(); // Fetch products from the database
-        console.log("Fetched Products:", products); // Log fetched products
+        console.log("Fetched Products:", products);
 
         // Clear existing options
         editProductSelect.innerHTML = "";
@@ -265,68 +271,42 @@ function readProductImage(formImage) {
 
 // Load and display submissions
 async function loadSubmissions() {
-    const db = await openDatabase();
-    const transaction = db.transaction("submissions", "readonly");
-    const store = transaction.objectStore("submissions");
-    const request = store.getAll();
+    const submissionsContainer = document.querySelector("#submissions-container");
+    try {
+        const submissions = await database.getSubmissions(); // Fetch submissions from the database
+        console.log("Fetched Submissions:", submissions);
 
-    return new Promise((resolve, reject) => {
-        request.onsuccess = () => {
-            console.log("Fetched submissions:", request.result); // Log fetched data
-            resolve(request.result);
-        };
-        request.onerror = () => reject("Unable to fetch submissions.");
-    });
+        submissions.forEach(submission => {
+            const submissionDiv = document.createElement("div");
+            submissionDiv.innerText = `Name: ${submission.name}, Email: ${submission.email}, Message: ${submission.message}`;
+            submissionsContainer.appendChild(submissionDiv);
+        });
+    } catch (error) {
+        console.error("Error loading submissions:", error);
+    }
 }
 
-async function displaySubmissions() {
-    const submissions = await loadSubmissions();
-    const submissionsList = document.querySelector("#submissions-list");
-
-    console.log("Displaying submissions:", submissions); // Log submissions being displayed
-
-    submissionsList.innerHTML = "";
-
-    submissions.forEach(submission => {
-        const listItem = document.createElement("li");
-        listItem.classList.add("submission-item");
-
-        const content = `
-            <strong>${submission.name} ${submission.surname}</strong>
-            <br>Email: ${submission.email}
-            <br>Phone: ${submission.phone}
-            <br>Message: ${submission.message}
-        `;
-        listItem.innerHTML = content;
-        submissionsList.appendChild(listItem);
-    });
-}
-
-// Load and display low stock products
+// Load low stock products
 async function loadLowStockProducts() {
-    const lowStockProducts = await database.getLowStockProducts(); // Fetch low stock products from the database
-    const lowStockList = document.querySelector("#low-stock-list");
+    const lowStockProductsContainer = document.querySelector("#low-stock-products");
+    try {
+        const lowStockProducts = await database.getLowStockProducts(); // Fetch low stock products from the database
+        console.log("Fetched Low Stock Products:", lowStockProducts);
 
-    console.log("Fetched low stock products:", lowStockProducts); // Log low stock products
-
-    lowStockList.innerHTML = ""; // Clear existing items
-
-    lowStockProducts.forEach(product => {
-        const listItem = document.createElement("li");
-        listItem.classList.add("low-stock-item");
-
-        const content = `
-            <strong>${product.name}</strong> (Lagernivå: ${product.stock})
-        `;
-        listItem.innerHTML = content; // Set the inner HTML for the list item
-        lowStockList.appendChild(listItem); // Append the list item to the list
-    });
+        lowStockProducts.forEach(product => {
+            const productDiv = document.createElement("div");
+            productDiv.innerText = `Name: ${product.name}, Stock: ${product.stock}`;
+            lowStockProductsContainer.appendChild(productDiv);
+        });
+    } catch (error) {
+        console.error("Error loading low stock products:", error);
+    }
 }
 
-// Initialize everything
+// Call these functions on page load
 document.addEventListener("DOMContentLoaded", () => {
     loadCategories();
     loadProducts();
-    loadLowStockProducts();
-    displaySubmissions();
+    loadLowStockProducts(); // Ensure this function is called correctly
+    loadSubmissions(); // Ensure this function is called correctly
 });

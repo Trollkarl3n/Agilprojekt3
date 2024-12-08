@@ -68,57 +68,71 @@
         </section>
         <hr />
 
-        <!-- FORM: CREATE NEW PRODUCT -->
-        <section>
-            <h2>Skapa produkt</h2>
-            <form id="create-product-form" method="POST">
-                <div id="product-preview">
-                    <img id="main-image-preview" src="" alt="Main Image Preview" />
-                    <div>
-                        <label for="main-image-select">Välj huvudbild:</label>
-                        <select id="main-image-select">
-                            <option value="0">Välj bild</option>
-                            <option value="1">Bild 1</option>
-                            <option value="2">Bild 2</option>
-                            <option value="3">Bild 3</option>
-                            <option value="4">Bild 4</option>
-                            <option value="5">Bild 5</option>
-                        </select>
-                    </div>
-                    <div class="thumbnails">
-                        <img class="thumbnail" id="thumbnail-1" src="" alt="Thumbnail 1" />
-                        <img class="thumbnail" id="thumbnail-2" src="" alt="Thumbnail 2" />
-                        <img class="thumbnail" id="thumbnail-3" src="" alt="Thumbnail 3" />
-                        <img class="thumbnail" id="thumbnail-4" src="" alt="Thumbnail 4" />
-                        <img class="thumbnail" id="thumbnail-5" src="" alt="Thumbnail 5" />
-                    </div>
-                </div>
-                <div>
-                    <label for="create-product-name">Produktnamn</label>
-                    <input id="create-product-name" name="product-name" type="text" minlength="4" maxlength="50" required />
-                </div>
-                <div>
-                    <label for="create-product-price">Pris</label>
-                    <input id="create-product-price" name="product-price" type="number" min="0" value="0" required />
-                </div>
-                <div>
-                    <label for="create-product-desc">Produktbeskrivning</label>
-                    <textarea id="create-product-desc" name="product-desc" rows="5" cols="60" required></textarea>
-                </div>
-                <!-- New Stock Quantity Input -->
-                <div>
-                    <label for="create-product-stock">Lagernivå</label>
-                    <input id="create-product-stock" name="product-stock" type="number" min="0" required />
-                </div>
-                <!-- Additional image fields -->
-                <div>
-                    <label for="create-product-category">Kategori</label>
-                    <select id="create-product-category" name="product-category" required></select>
-                </div>
-                <button type="submit">Skapa</button>
-            </form>
-        </section>
-        <hr />
+<!-- FORM: CREATE NEW PRODUCT -->
+<section>
+    <h2>Skapa produkt</h2>
+    <form id="create-product-form" method="POST">
+        <div id="product-preview">
+            <img id="main-image-preview" src="" alt="Main Image Preview" style="max-width: 200px;" />
+            <div>
+                <label for="main-image-select">Välj huvudbild:</label>
+                <select id="main-image-select">
+                    <option value="0">Välj bild</option>
+                    <option value="1">Bild 1</option>
+                    <option value="2">Bild 2</option>
+                    <option value="3">Bild 3</option>
+                    <option value="4">Bild 4</option>
+                    <option value="5">Bild 5</option>
+                </select>
+            </div>
+            <div class="thumbnails">
+                <img class="thumbnail" id="thumbnail-1" src="" alt="Thumbnail 1" />
+                <img class="thumbnail" id="thumbnail-2" src="" alt="Thumbnail 2" />
+                <img class="thumbnail" id="thumbnail-3" src="" alt="Thumbnail 3" />
+                <img class="thumbnail" id="thumbnail-4" src="" alt="Thumbnail 4" />
+                <img class="thumbnail" id="thumbnail-5" src="" alt="Thumbnail 5" />
+            </div>
+        </div>
+        <div>
+            <label for="create-product-name">Produktnamn</label>
+            <input id="create-product-name" name="product-name" type="text" minlength="4" maxlength="50" required />
+        </div>
+        <div>
+            <label for="create-product-price">Pris</label>
+            <input id="create-product-price" name="product-price" type="number" min="0" value="0" required />
+        </div>
+        <div>
+            <label for="create-product-desc">Produktbeskrivning</label>
+            <textarea id="create-product-desc" name="product-desc" rows="5" cols="60" required></textarea>
+        </div>
+        <!-- Additional image fields for product images -->
+        <div>
+            <label for="create-product-image-1">Produktbild 1</label>
+            <input type="file" accept="image/*" id="create-product-image-1" name="product-image" required />
+        </div>
+        <div>
+            <label for="create-product-image-2">Produktbild 2</label>
+            <input type="file" accept="image/*" id="create-product-image-2" name="product-image" />
+        </div>
+        <div>
+            <label for="create-product-image-3">Produktbild 3</label>
+            <input type="file" accept="image/*" id="create-product-image-3" name="product-image" />
+        </div>
+        <div>
+            <label for="create-product-image-4">Produktbild 4</label>
+            <input type="file" accept="image/*" id="create-product-image-4" name="product-image" />
+        </div>
+        <div>
+            <label for="create-product-image-5">Produktbild 5</label>
+            <input type="file" accept="image/*" id="create-product-image-5" name="product-image" />
+        </div>
+        <div>
+            <label for="create-product-category">Kategori</label>
+            <select id="create-product-category" name="product-category" required></select>
+        </div>
+        <button type="submit">Skapa</button>
+    </form>
+</section>
 
         <!-- FORM: EDIT PRODUCT -->
         <section>
